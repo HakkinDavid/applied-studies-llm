@@ -1,0 +1,41 @@
+{
+  "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd": {
+    "id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd",
+    "sha256": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd",
+    "original_filename": "Tabla de olores dentro de las clases   Rafael Negrete Leyva (T035322).pdf",
+    "stored_filename": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd.pdf",
+    "extension": ".pdf",
+    "content_type": "application/pdf",
+    "size_bytes": 153162,
+    "text_chars": 9981,
+    "uploaded_at": "2026-05-14T04:53:54.500175+00:00",
+    "duplicate": true,
+    "label": "string",
+    "generated_questions": 15,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código"
+  },
+  "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8": {
+    "id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "sha256": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "original_filename": "Ejemplo de refactorización.pdf",
+    "stored_filename": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8.pdf",
+    "extension": ".pdf",
+    "content_type": "application/pdf",
+    "size_bytes": 793240,
+    "text_chars": 29034,
+    "uploaded_at": "2026-05-14T05:40:35.509862+00:00",
+    "duplicate": false,
+    "generated_questions": 15,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "classification_summary": "El material introduce el concepto de refactoring de código, su propósito y beneficios en el desarrollo de software. Explora su historia, la importancia de las pruebas y las herramientas de apoyo. Se presenta un ejemplo detallado de refactoring de un sistema de renta de videos, aplicando diversas técnicas para mejorar la estructura y la mantenibilidad del código.",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  }
+}

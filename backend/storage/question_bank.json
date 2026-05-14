@@ -1,0 +1,527 @@
+[
+  {
+    "q": "Un método que necesita más de dos parámetros o que tiene grupos de parámetros relacionados, ¿a qué olor específico dentro de las clases corresponde?",
+    "options": [
+      "Método largo",
+      "Clase larga",
+      "Lista de parámetros larga",
+      "Comentarios"
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Cuando un nombre incluye el tipo de dato o estructura en vez de comunicar su intención, como 'iCount' o nombres que reflejan el tipo y no el propósito, ¿qué tipo de olor se está presentando?",
+    "options": [
+      "Nombre no comunicativo",
+      "Nombres inconsistentes",
+      "Tipo incrustado en el nombre",
+      "Generalidad especulativa"
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Si un desarrollador agrega comentarios para explicar algo que debería comunicarse mejor con nombres, métodos o estructura, ¿cuál es el olor específico que se identifica?",
+    "options": [
+      "Comentarios",
+      "Método largo",
+      "Clase larga",
+      "Código muerto"
+    ],
+    "answer": 0,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Un método que concentra demasiados pasos o responsabilidades, dificultando su lectura y modificación, se clasifica como:",
+    "options": [
+      "Clase larga",
+      "Método largo",
+      "Lista de parámetros larga",
+      "Generalidad especulativa"
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Si una clase tiene muchas variables de instancia, muchos métodos o muchas líneas, lo que la hace difícil de entender y mantener, ¿qué olor específico se ha detectado?",
+    "options": [
+      "Método largo",
+      "Clase larga",
+      "Código duplicado",
+      "Generalidad especulativa"
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Cuando un nombre no permite entender claramente qué representa o qué hace el elemento, como nombres de uno o dos caracteres o abreviaciones, ¿qué olor se presenta?",
+    "options": [
+      "Tipo incrustado en el nombre",
+      "Nombres inconsistentes",
+      "Nombre no comunicativo",
+      "Número mágico"
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "La misma idea recibe nombres diferentes en distintas partes del sistema, causando confusión. Este problema se conoce como:",
+    "options": [
+      "Nombre no comunicativo",
+      "Nombres inconsistentes",
+      "Tipo incrustado en el nombre",
+      "Comentarios"
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "El código que ya no aporta comportamiento real al sistema y solo aumenta ruido, como variables o métodos no usados, se denomina:",
+    "options": [
+      "Generalidad especulativa",
+      "Código duplicado",
+      "Código muerto",
+      "Número mágico"
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Un diseño agregado para necesidades futuras que no existen en los requisitos actuales, resultando en clases o métodos sin clientes, se conoce como:",
+    "options": [
+      "Código muerto",
+      "Generalidad especulativa",
+      "Código duplicado",
+      "Clase larga"
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Un valor constante que aparece directamente en el código sin explicar su significado, como límites o porcentajes escritos directamente, es un:",
+    "options": [
+      "Código duplicado",
+      "Número mágico",
+      "Comentarios",
+      "Generalidad especulativa"
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Cuando dos fragmentos de código se parecen mucho o producen casi el mismo efecto, aunque no sean idénticos, se identifica como:",
+    "options": [
+      "Código muerto",
+      "Número mágico",
+      "Código duplicado",
+      "Clases alternativas con diferentes interfaces"
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Dos clases realizan tareas parecidas, pero con nombres de métodos o protocolos diferentes. Este es un ejemplo de:",
+    "options": [
+      "Código duplicado",
+      "Clases alternativas con diferentes interfaces",
+      "Herencia simulada",
+      "Caso especial"
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Si el flujo de un programa depende repetidamente de revisar si un objeto es 'null', con código como 'if (xxx == null)' apareciendo muchas veces, ¿qué olor específico se presenta?",
+    "options": [
+      "Expresiones booleanas complicadas",
+      "Caso especial",
+      "Verificación de nulos",
+      "Herencia simulada"
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "Condiciones difíciles de leer porque combinan demasiados operadores lógicos (AND, OR, NOT) o expresiones anidadas, corresponden a:",
+    "options": [
+      "Verificación de nulos",
+      "Caso especial",
+      "Expresiones booleanas complicadas",
+      "Herencia simulada"
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "El código decide el comportamiento revisando tipos o códigos (ej. switch, varios if en fila, instanceof) en lugar de usar clases y polimorfismo. ¿Qué olor se describe?",
+    "options": [
+      "Caso especial",
+      "Herencia simulada",
+      "Expresiones booleanas complicadas",
+      "Clases alternativas con diferentes interfaces"
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Olores en el código",
+    "synthetic": true,
+    "source_material_id": "795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd"
+  },
+  {
+    "q": "¿Cuál es la característica fundamental del refactoring de código?",
+    "options": [
+      "Cambiar la estructura interna de un programa sin alterar su comportamiento externo.",
+      "Modificar el comportamiento externo para mejorar la funcionalidad.",
+      "Reescribir el código desde cero para optimizar el rendimiento.",
+      "Agregar nuevas funcionalidades sin tocar el código existente."
+    ],
+    "answer": 0,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "¿Cuál es la meta principal del refactoring de un sistema de software?",
+    "options": [
+      "Aumentar la velocidad de ejecución del programa.",
+      "Hacer el software más fácil de entender y de modificar.",
+      "Reducir el número total de líneas de código.",
+      "Implementar nuevas características rápidamente."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "Para verificar que el refactoring no introduce cambios en el comportamiento externo de un programa, ¿qué herramientas o prácticas se utilizan principalmente?",
+    "options": [
+      "Análisis de rendimiento y optimización de algoritmos.",
+      "Pruebas y herramientas para el análisis formal de código.",
+      "Revisión manual exhaustiva del código por parte de un equipo grande.",
+      "Comparación visual de la interfaz de usuario antes y después."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "¿Por qué los administradores podrían mostrar reticencia al refactoring de código?",
+    "options": [
+      "Consideran que el refactoring es una tarea que solo los programadores junior deben realizar.",
+      "Creen que el tiempo dedicado a limpiar el código es tiempo no dedicado a implementar nueva funcionalidad.",
+      "Temen que el refactoring introduzca demasiados errores en el sistema.",
+      "Piensan que el refactoring es una moda pasajera sin beneficios reales."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "Además de hacer el software más fácil de entender y modificar, ¿qué otro beneficio importante puede aportar el refactoring?",
+    "options": [
+      "Asegurar la compatibilidad con sistemas operativos obsoletos.",
+      "Mejorar la cohesión y reducir el código muy parecido.",
+      "Incrementar la seguridad del sistema contra ataques externos.",
+      "Disminuir el consumo de memoria RAM del programa."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "¿Con qué frecuencia se recomienda realizar refactoring de código?",
+    "options": [
+      "Una vez al año, como parte de un mantenimiento mayor.",
+      "Cada seis meses, dedicando un periodo específico de dos semanas.",
+      "Continuamente, mientras se desarrolla y se reconocen 'olores' o signos de alerta.",
+      "Solo cuando el software presenta fallos críticos y necesita una reescritura."
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "Según la 'regla de tres' en refactoring, ¿cuándo es el momento adecuado para considerar refactorizar una idea de código?",
+    "options": [
+      "La primera vez que se codifica una tarea.",
+      "La segunda vez que se codifica la misma idea.",
+      "La tercera vez que se codifica la misma idea.",
+      "Después de que el código ha sido probado en producción."
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "Antes de iniciar un proceso de refactoring, ¿qué es un requisito fundamental para asegurar la preservación de la semántica del código?",
+    "options": [
+      "Tener un equipo de programadores experimentados.",
+      "Contar con un conjunto sólido de pruebas para las secciones a refactorizar.",
+      "Obtener la aprobación de todos los administradores del proyecto.",
+      "Realizar una copia de seguridad completa del repositorio de código."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "La técnica de refactoring 'Extracción de método' (Extract Method) se aplica cuando se tiene un fragmento de código que puede ser agrupado. ¿Cuál es el objetivo principal de esta técnica?",
+    "options": [
+      "Reducir el número total de clases en el sistema.",
+      "Convertir el fragmento en un método cuyo nombre explique su propósito.",
+      "Aumentar la complejidad ciclomática para mejorar el rendimiento.",
+      "Eliminar la necesidad de pruebas unitarias para ese fragmento."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "¿En qué situación se debe aplicar la técnica de refactoring 'Movimiento de un método' (Move Method)?",
+    "options": [
+      "Cuando un método es demasiado largo y necesita ser dividido.",
+      "Cuando un método es utilizado más por otra clase que por su clase actual.",
+      "Cuando un método no tiene ninguna dependencia de otras clases.",
+      "Cuando se desea cambiar el nombre de un método por uno más descriptivo."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "La técnica 'Reemplazo de código de tipo a través del patrón de estado/estrategia' se utiliza cuando se tiene un código de tipo que afecta el comportamiento de una clase. ¿Por qué se opta por esta técnica en lugar de simplemente usar subclases?",
+    "options": [
+      "Porque el código de tipo es demasiado simple para justificar subclases.",
+      "Porque no se pueden utilizar subclases directamente para el código de tipo existente.",
+      "Porque el patrón de estado/estrategia siempre es más eficiente en tiempo de ejecución.",
+      "Porque esta técnica elimina la necesidad de cualquier tipo de condicionales."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "¿Cuál es el problema que la técnica 'Reemplazo de condicionales con polimorfismo' busca resolver?",
+    "options": [
+      "La existencia de métodos con nombres ambiguos.",
+      "Un condicional que selecciona diferente comportamiento dependiendo del tipo de objeto.",
+      "La duplicación excesiva de código en diferentes métodos.",
+      "La falta de comentarios en bloques de código complejos."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "La técnica del 'Método plantilla' se aplica cuando dos métodos en subclases llevan a cabo pasos similares en el mismo orden, pero con algunas diferencias. ¿Cuál es el enfoque principal de esta técnica?",
+    "options": [
+      "Eliminar completamente uno de los métodos duplicados.",
+      "Mover cada paso diferente a un método abstracto en la superclase.",
+      "Dar a cada paso en los métodos la misma firma para que los métodos originales se unifiquen.",
+      "Reescribir ambos métodos desde cero para asegurar la unicidad."
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "Incluso con el uso de herramientas de refactoring, ¿por qué se enfatiza la importancia de las pruebas en el proceso?",
+    "options": [
+      "Las herramientas de refactoring no son lo suficientemente maduras para ser confiables.",
+      "No todos los refactorings pueden ser probados formalmente y se pueden introducir errores.",
+      "Las pruebas son necesarias solo para la funcionalidad nueva, no para el código existente.",
+      "Las herramientas solo validan la sintaxis, no la lógica de negocio."
+    ],
+    "answer": 1,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  {
+    "q": "En el contexto de las decisiones de diseño para el refactoring, ¿cuál es la característica distintiva del enfoque de 'Diseño evolucionado'?",
+    "options": [
+      "Se enfoca únicamente en las necesidades presentes, ignorando las futuras.",
+      "Diseña para minimizar los cambios futuros, sin considerar el costo de la flexibilidad actual.",
+      "Compara el costo de la flexibilidad actual contra el costo del refactoring posterior y se refactoriza cuando aparecen los cambios.",
+      "Requiere una planificación exhaustiva y detallada antes de cualquier implementación."
+    ],
+    "answer": 2,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Fundamentos y Técnicas de Refactoring",
+    "synthetic": true,
+    "source_material_id": "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8",
+    "tree_id": "ingenieria-de-software",
+    "tree_name": "Ingeniería de Software",
+    "node_id": "refactoring-de-codigo",
+    "node_name": "Refactoring de Código",
+    "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
+    "leaf_name": "Fundamentos y Técnicas de Refactoring",
+    "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  }
+]

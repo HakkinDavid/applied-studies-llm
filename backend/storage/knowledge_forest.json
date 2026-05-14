@@ -1,0 +1,33 @@
+{
+  "trees": {
+    "ingenieria-de-software": {
+      "id": "ingenieria-de-software",
+      "name": "Ingeniería de Software",
+      "description": "Principios, metodologías y prácticas para el diseño, desarrollo y mantenimiento de sistemas de software de alta calidad.",
+      "created_at": "2026-05-14T05:40:09.034426+00:00",
+      "updated_at": "2026-05-14T05:40:35.508454+00:00",
+      "nodes": {
+        "refactoring-de-codigo": {
+          "id": "refactoring-de-codigo",
+          "name": "Refactoring de Código",
+          "description": "Estrategias y patrones para la reestructuración y optimización de la base de código existente sin alterar su comportamiento externo.",
+          "created_at": "2026-05-14T05:40:09.034475+00:00",
+          "updated_at": "2026-05-14T05:40:35.508466+00:00",
+          "leaves": {
+            "fundamentos-y-tecnicas-de-refactoring": {
+              "id": "fundamentos-y-tecnicas-de-refactoring",
+              "name": "Fundamentos y Técnicas de Refactoring",
+              "description": "Definición, principios, historia, beneficios y cuándo aplicar refactoring. Incluye la identificación de 'malos olores' en el código y la aplicación práctica de técnicas como la extracción de métodos, el movimiento de responsabilidades, el reemplazo de código de tipo con polimorfismo y el patrón de método plantilla, ilustrado con un ejemplo de sistema de renta de videos.",
+              "created_at": "2026-05-14T05:40:09.034503+00:00",
+              "updated_at": "2026-05-14T05:40:35.508471+00:00",
+              "materials": [
+                "03b215dccde9c5d302122f60f2b1241981499c5b069762377815bfbb25b56df8"
+              ],
+              "question_count": 15
+            }
+          }
+        }
+      }
+    }
+  }
+}
