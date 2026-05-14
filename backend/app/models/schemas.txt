@@ -1,0 +1,27 @@
+DOCUMENTACIÓN DE app/models/schemas.py
+
+Define modelos Pydantic para las respuestas de FastAPI.
+
+MaterialResponse:
+Respuesta del endpoint de subida. Además de metadatos del archivo, ahora incluye:
+- reference_count: cantidad de fragmentos extraídos del documento.
+- tree/node/leaf: ubicación del material en el bosque.
+- knowledge_path: ruta completa en el bosque.
+
+QuestionBankResponse:
+Devuelve total y lista de preguntas.
+
+KnowledgeForestResponse:
+Devuelve total_trees y el bosque completo.
+
+MaterialReferencesResponse:
+Devuelve los fragmentos referenciables de un documento. Sirve para revisar de dónde salieron las preguntas.
+
+Campos de referencia por pregunta:
+Cada pregunta puede incluir:
+- source_document_id
+- source_document_name
+- source_ref_id
+- source_page
+- source_excerpt
+Estos campos permiten mostrar en el  frontend el documento original, página aproximada y extracto usado.

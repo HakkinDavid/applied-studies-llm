@@ -1,0 +1,11 @@
+DOCUMENTACIÓN DE app/routes/questions.py
+
+GET /api/question-bank:
+Devuelve preguntas en JSON.
+
+DELETE /api/question-bank:
+Limpia el banco.
+
+GET /egel/banco_preguntas.js:
+Devuelve window.questions = [...] para mantener compatibilidad con el frontend.
+Las preguntas incluyen campos extra de referencia documental.

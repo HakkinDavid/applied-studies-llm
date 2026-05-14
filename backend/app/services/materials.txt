@@ -1,0 +1,13 @@
+DOCUMENTACIÓN DE app/services/materials.py
+
+Coordina el procesamiento de un material ya extraído.
+
+process_material_text:
+1. Clasifica el documento dentro del bosque.
+2. Crea o actualiza árbol, nodo y hoja.
+3. Genera preguntas.
+4. Agrega referencias documentales a cada pregunta.
+5. Guarda preguntas nuevas en el banco.
+6. Actualiza conteo del bosque.
+
+La asociación documento-nodo-hoja permite una experiencia integral de estudio.

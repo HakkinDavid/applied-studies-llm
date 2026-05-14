@@ -1,0 +1,5 @@
+DOCUMENTACIÓN DE app/routes/health.py
+
+GET /api/health
+
+Sirve para verificar que el backend corre y que el cliente de IA está configurado.

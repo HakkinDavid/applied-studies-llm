@@ -1,0 +1,11 @@
+DOCUMENTACIÓN DE app/services/forest.py
+
+Contiene la lógica del bosque de conocimiento:
+- árbol = carrera/especialidad
+- nodo = área derivada del árbol
+- hoja = tema específico
+
+El bosque se construye bajo demanda con IA.
+El documento queda asociado a una hoja, y esa hoja pertenece a un nodo y árbol.
+
+También genera una categoría compatible con el frontend actual.

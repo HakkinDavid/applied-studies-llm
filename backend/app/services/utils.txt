@@ -1,0 +1,13 @@
+DOCUMENTACIÓN DE app/services/utils.py
+
+Utilidades generales.
+
+now_iso:
+Devuelve fecha y hora actual en formato ISO con zona UTC.
+
+slugify:
+Convierte texto a identificadores seguros para árboles, nodos y hojas.
+
+extract_json_from_model_text:
+Intenta convertir la respuesta del modelo a JSON. También limpia bloques ```json.
+Si no hay JSON válido, lanza error 500.

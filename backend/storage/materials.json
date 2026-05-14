@@ -37,5 +37,29 @@
     "leaf_id": "fundamentos-y-tecnicas-de-refactoring",
     "leaf_name": "Fundamentos y Técnicas de Refactoring",
     "knowledge_path": "Ingeniería de Software > Refactoring de Código > Fundamentos y Técnicas de Refactoring"
+  },
+  "73aa2a8bcf5f2a1b717f591b70b111d6d9f6361ea21f37e27d73919f38a1d666": {
+    "id": "73aa2a8bcf5f2a1b717f591b70b111d6d9f6361ea21f37e27d73919f38a1d666",
+    "sha256": "73aa2a8bcf5f2a1b717f591b70b111d6d9f6361ea21f37e27d73919f38a1d666",
+    "original_filename": "llamenadios4.pdf",
+    "stored_filename": "73aa2a8bcf5f2a1b717f591b70b111d6d9f6361ea21f37e27d73919f38a1d666.pdf",
+    "extension": ".pdf",
+    "content_type": "application/pdf",
+    "size_bytes": 131692,
+    "text_chars": 5406,
+    "reference_count": 7,
+    "uploaded_at": "2026-05-14T06:17:58.168285+00:00",
+    "duplicate": false,
+    "generated_questions": 15,
+    "area": "Desarrollo de software de aplicación",
+    "subarea": "Conceptos Clave y Responsabilidad Social del Profesional",
+    "classification_summary": "Cuestionario que evalúa el conocimiento sobre ética profesional, incluyendo definiciones de ONG y ONGD, las etapas de la ética profesional según Hortal (2010), la distinción entre bienes intrínsecos y extrínsecos, y las formas de responsabilidad profesional, así como la distinción entre ética y moral según Camacho, Fernández y Miralles (2009).",
+    "tree_id": "etica-profesional-y-responsabilidad-social",
+    "tree_name": "Ética Profesional y Responsabilidad Social",
+    "node_id": "fundamentos-y-evolucion-de-la-etica-profesional",
+    "node_name": "Fundamentos y Evolución de la Ética Profesional",
+    "leaf_id": "conceptos-clave-y-responsabilidad-social-del-profesional",
+    "leaf_name": "Conceptos Clave y Responsabilidad Social del Profesional",
+    "knowledge_path": "Ética Profesional y Responsabilidad Social > Fundamentos y Evolución de la Ética Profesional > Conceptos Clave y Responsabilidad Social del Profesional"
   }
 }

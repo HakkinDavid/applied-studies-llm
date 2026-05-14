@@ -1,0 +1,7 @@
+DOCUMENTACIÓN DE app/routes/forest.py
+
+GET /api/knowledge-forest:
+Devuelve árboles, nodos y hojas.
+
+DELETE /api/knowledge-forest:
+Limpia el bosque para pruebas.

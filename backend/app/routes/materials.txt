@@ -1,0 +1,18 @@
+DOCUMENTACIÓN DE app/routes/materials.py
+
+Endpoints de materiales.
+
+POST /api/materials/upload:
+Sube documento, calcula SHA-256, extrae texto, genera referencias, clasifica en el bosque y genera preguntas.
+
+GET /api/materials:
+Lista materiales.
+
+GET /api/materials/{material_id}/references:
+Devuelve los fragmentos del documento original. Sirve para depurar o mostrar fuente de preguntas.
+
+Cada pregunta generada incluye referencia al documento:
+- source_document_name
+- source_page
+- source_excerpt
+- source_ref_id

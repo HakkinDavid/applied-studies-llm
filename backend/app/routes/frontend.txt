@@ -1,0 +1,4 @@
+DOCUMENTACIÓN DE app/routes/frontend.py
+
+Sirve frontend/build si existe.
+Si no existe, muestra rutas útiles del backend.

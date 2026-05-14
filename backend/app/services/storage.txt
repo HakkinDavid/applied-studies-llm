@@ -1,0 +1,14 @@
+DOCUMENTACIÓN DE app/services/storage.py
+
+Administra lectura y escritura de JSON.
+
+Además de materials.json, question_bank.json y knowledge_forest.json, ahora maneja:
+storage/references/{material_id}.json
+
+Ese archivo guarda fragmentos del documento original:
+- ref_id
+- page
+- excerpt
+- text
+
+Estos fragmentos se usan para asociar cada pregunta con una referencia concreta del documento.

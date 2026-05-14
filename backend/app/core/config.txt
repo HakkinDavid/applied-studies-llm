@@ -1,0 +1,33 @@
+DOCUMENTACIÓN DE app/core/config.py
+
+Centraliza variables de configuración.
+
+OPENAI_API_KEY:
+Clave del proveedor de IA compatible con la librería de OpenAI.
+
+OPENAI_BASE_URL:
+URL base del proveedor de IA. Permite cambiar de proveedor usando solo .env.
+
+MODEL:
+Nombre del modelo.
+
+MAX_FILE_SIZE_MB:
+Límite de peso para archivos subidos.
+
+MAX_FILE_SIZE_BYTES:
+Límite convertido a bytes.
+
+DEFAULT_QUESTION_COUNT:
+Cantidad de preguntas por defecto.
+
+ALLOWED_EXTENSIONS:
+Formatos aceptados: PDF, TXT, MD y DOCX.
+
+FRONTEND_COMPATIBLE_AREAS:
+Áreas conservadas porque el frontend actual filtra con esos valores.
+
+MAX_REFERENCE_CHARS:
+Tamaño máximo del extracto que se guarda por referencia.
+
+MAX_REFERENCES_FOR_PROMPT:
+Cantidad máxima de fragmentos referenciados que se mandan al modelo para elegir fuente.

@@ -1,0 +1,13 @@
+DOCUMENTACIÓN DE app/services/ai.py
+
+Centraliza llamadas al proveedor de IA usando la librería de OpenAI.
+
+call_ai_json:
+Se usa para clasificación del bosque y generación de preguntas.
+
+Errores:
+- falta OPENAI_BASE_URL
+- falta OPENAI_API_KEY
+- falta MODEL
+- respuesta vacía
+- error de comunicación

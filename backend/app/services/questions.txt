@@ -1,0 +1,17 @@
+DOCUMENTACIÓN DE app/services/questions.py
+
+Genera y normaliza preguntas.
+
+Cambio importante:
+Cada pregunta ahora queda asociada al documento original y a un fragmento de referencia.
+
+Campos nuevos por pregunta:
+- source_document_id: id SHA-256 del documento.
+- source_document_name: nombre original del archivo.
+- source_ref_id: fragmento específico usado.
+- source_page: página si viene de PDF.
+- source_excerpt: extracto breve para mostrar en el front.
+- knowledge_path: ruta dentro del bosque.
+
+El modelo recibe referencias disponibles y debe elegir source_ref_id.
+Si no lo elige bien, el backend asigna una referencia de respaldo.

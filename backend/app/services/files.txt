@@ -1,0 +1,8 @@
+DOCUMENTACIÓN DE app/services/files.py
+
+Funciones de archivos:
+- calculate_sha256: calcula hash del archivo para evitar duplicados.
+- get_extension: obtiene extensión.
+- validate_file: valida extensión, archivo no vacío y tamaño máximo.
+
+Los archivos se guardan usando SHA-256 como nombre.

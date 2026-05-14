@@ -1,0 +1,33 @@
+DOCUMENTACIÓN DE app/services/text.py
+
+Extrae texto y referencias del documento.
+
+Antes solo se extraía texto general. Ahora también se crean fragmentos referenciables.
+
+Funciones importantes:
+
+extract_text_and_references:
+Devuelve:
+1. texto completo
+2. lista de referencias
+
+Cada referencia tiene:
+- ref_id: identificador del fragmento
+- page: página si viene de PDF
+- excerpt: extracto corto para mostrar en el frontend
+- text: fragmento completo usado para contexto
+
+PDF:
+Se generan referencias por página y fragmento. Ejemplo: p3-1.
+
+DOCX:
+Se generan referencias por párrafo. Ejemplo: par5-1.
+
+TXT/MD:
+Se generan referencias por fragmentos del texto. Ejemplo: txt-1.
+
+references_for_prompt:
+Convierte referencias a texto para que la IA pueda elegir de dónde salió cada pregunta.
+
+Uso esperado:
+Cada pregunta generada debe traer source_ref_id. Luego el backend cruza ese id con las referencias guardadas y agrega source_page y source_excerpt.

@@ -1,0 +1,36 @@
+DOCUMENTACIÓN DE app/core/paths.py
+
+Centraliza rutas usadas por el backend.
+
+BACKEND_DIR:
+Ruta de la carpeta backend.
+
+PROJECT_ROOT:
+Ruta raíz del proyecto.
+
+STORAGE_DIR:
+Carpeta de datos generados por el backend.
+
+UPLOADS_DIR:
+Guarda documentos originales con nombre SHA-256.
+
+TEXTS_DIR:
+Guarda texto extraído de cada documento.
+
+REFERENCES_DIR:
+Guarda fragmentos referenciables del documento.
+
+INDEX_FILE:
+Archivo materials.json.
+
+QUESTION_BANK_FILE:
+Archivo question_bank.json.
+
+KNOWLEDGE_FOREST_FILE:
+Archivo knowledge_forest.json.
+
+FRONTEND_BUILD:
+Carpeta frontend/build.
+
+ensure_storage_directories:
+Crea las carpetas necesarias al iniciar.
