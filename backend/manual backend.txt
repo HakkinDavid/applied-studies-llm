@@ -1,0 +1,484 @@
+MANUAL SENCILLO PARA EJECUTAR SOLO EL BACKEND
+Proyecto: Applied Studies LLM
+
+1. Objetivo del manual
+
+Este manual explica cómo ejecutar únicamente el backend del proyecto después de descargarlo desde GitHub.
+
+No necesitas correr el frontend para probar el backend. Puedes usar Swagger desde el navegador para subir documentos, generar preguntas, ver el banco de preguntas y revisar el bosque de conocimiento.
+
+2. Requisitos previos
+
+Antes de iniciar, necesitas tener instalado:
+
+1. Python 3.10 o superior.
+2. Git, si vas a clonar el repositorio desde GitHub.
+3. PowerShell o una terminal equivalente.
+4. Un editor como Visual Studio Code.
+5. Una clave o configuración de un servicio de IA compatible con la librería de OpenAI.
+
+3. Descargar el proyecto desde GitHub
+
+Abre PowerShell en la carpeta donde quieras guardar el proyecto y ejecuta:
+
+git clone URL_DEL_REPOSITORIO
+
+Ejemplo:
+
+git clone https://github.com/usuario/applied-studies-llm.git
+
+Después entra a la carpeta del proyecto:
+
+cd applied-studies-llm
+
+Luego entra a la carpeta del backend:
+
+cd backend
+
+Al final deberías estar en una ruta parecida a esta:
+
+C:\Users\TuUsuario\Documents\GitHub\applied-studies-llm\backend
+
+4. Revisar la estructura esperada
+
+Dentro de la carpeta backend deberías ver archivos parecidos a estos:
+
+backend/
+├── main.py
+├── requirements.txt
+├── .env.example
+├── app/
+└── storage/        Esta carpeta puede no existir al inicio. El backend la crea automáticamente.
+
+La carpeta storage puede generarse después de ejecutar el backend o después de subir documentos.
+
+5. Crear el entorno virtual
+
+Dentro de la carpeta backend, ejecuta:
+
+python -m venv .venv
+
+Esto crea una carpeta llamada .venv.
+
+Este paso solo se hace la primera vez.
+
+6. Activar el entorno virtual
+
+En PowerShell ejecuta:
+
+.venv\Scripts\activate
+
+Si funcionó, verás algo parecido a esto al inicio de la línea de comandos:
+
+(.venv) PS C:\...\backend>
+
+Eso significa que el entorno virtual está activo.
+
+7. Instalar dependencias
+
+Con el entorno virtual activo, ejecuta:
+
+pip install -r requirements.txt
+
+Esto instala las librerías necesarias para ejecutar el backend.
+
+Entre las dependencias principales están:
+
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+openai
+pypdf
+python-docx
+
+Este paso solo se hace la primera vez o cuando cambie requirements.txt.
+
+8. Crear el archivo .env
+
+El repositorio debe traer un archivo llamado:
+
+.env.example
+
+Ese archivo sirve como plantilla.
+
+Crea una copia llamada:
+
+.env
+
+En Windows puedes hacerlo manualmente desde el explorador de archivos o con este comando:
+
+copy .env.example .env
+
+Luego abre .env y llena las variables.
+
+Ejemplo usando un proveedor remoto compatible:
+
+OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+OPENAI_API_KEY=tu_api_key_aqui
+MODEL=gemini-2.5-flash
+MAX_FILE_SIZE_MB=10
+DEFAULT_QUESTION_COUNT=15
+
+Ejemplo usando un servicio local compatible:
+
+OPENAI_BASE_URL=http://localhost:11434/v1
+OPENAI_API_KEY=ollama
+MODEL=llama3.1
+MAX_FILE_SIZE_MB=10
+DEFAULT_QUESTION_COUNT=15
+
+Importante:
+
+No subas el archivo .env a GitHub.
+El archivo .env contiene claves privadas.
+El archivo .env debe estar dentro de la carpeta backend.
+
+9. Ejecutar el backend
+
+Con el entorno virtual activo y estando dentro de backend, ejecuta:
+
+python -m uvicorn main:app --reload
+
+Si todo está bien, verás algo parecido a:
+
+INFO:     Uvicorn running on http://127.0.0.1:8000
+INFO:     Application startup complete.
+
+Eso significa que el backend ya está corriendo.
+
+10. Abrir Swagger
+
+Abre en el navegador:
+
+http://127.0.0.1:8000/docs
+
+Swagger es una interfaz automática para probar los endpoints del backend.
+
+Desde ahí puedes:
+
+Verificar que el backend funciona.
+Subir archivos.
+Consultar preguntas.
+Revisar el bosque de conocimiento.
+Borrar datos de prueba.
+
+11. Probar que el backend funciona
+
+En Swagger busca:
+
+GET /api/health
+
+Presiona:
+
+Try it out
+
+Luego:
+
+Execute
+
+Respuesta esperada:
+
+{
+  "status": "ok",
+  "message": "Backend funcionando correctamente.",
+  "ai_configured": true,
+  "base_url": "...",
+  "model": "..."
+}
+
+Si ai_configured aparece como false, revisa que el archivo .env esté bien configurado.
+
+12. Subir un documento
+
+En Swagger busca:
+
+POST /api/materials/upload
+
+Presiona:
+
+Try it out
+
+Llena los campos:
+
+file:
+Selecciona un archivo PDF, DOCX, TXT o MD.
+
+tree_hint:
+Es opcional. Puedes dejarlo vacío o escribir una pista como:
+
+Ingeniería en Ciencias Computacionales
+
+num_questions:
+Cantidad de preguntas que quieres generar.
+
+Ejemplo:
+
+10
+
+Luego presiona:
+
+Execute
+
+Respuesta esperada:
+
+El backend responderá con información del documento, por ejemplo:
+
+{
+  "id": "sha256...",
+  "original_filename": "archivo.pdf",
+  "duplicate": false,
+  "generated_questions": 10,
+  "area": "...",
+  "subarea": "...",
+  "tree_name": "...",
+  "node_name": "...",
+  "leaf_name": "...",
+  "knowledge_path": "..."
+}
+
+13. Ver las preguntas generadas
+
+Puedes ver las preguntas desde:
+
+http://127.0.0.1:8000/api/question-bank
+
+También puedes verlo en Swagger:
+
+GET /api/question-bank
+
+Ahí se mostrará algo como:
+
+{
+  "total": 10,
+  "questions": [
+    {
+      "q": "Texto de la pregunta",
+      "options": ["Opción 1", "Opción 2", "Opción 3", "Opción 4"],
+      "answer": 0,
+      "area": "...",
+      "subarea": "...",
+      "synthetic": true,
+      "source_document_name": "archivo.pdf",
+      "source_page": 2,
+      "source_excerpt": "Extracto del documento..."
+    }
+  ]
+}
+
+14. Ver el banco que usaría el frontend
+
+Abre:
+
+http://127.0.0.1:8000/egel/banco_preguntas.js
+
+Debe aparecer algo parecido a:
+
+window.questions = [
+  {
+    "q": "Texto de la pregunta",
+    "options": ["...", "...", "...", "..."],
+    "answer": 1,
+    "area": "...",
+    "subarea": "...",
+    "synthetic": true
+  }
+];
+
+Este endpoint existe porque el frontend puede consumir el banco como si fuera un archivo JavaScript.
+
+15. Ver el bosque de conocimiento
+
+Abre:
+
+http://127.0.0.1:8000/api/knowledge-forest
+
+O en Swagger:
+
+GET /api/knowledge-forest
+
+Aquí puedes revisar cómo el backend organizó los documentos.
+
+La estructura general es:
+
+Bosque
+└── Árbol
+    └── Nodo
+        └── Hoja
+
+Ejemplo:
+
+Ingeniería en Ciencias Computacionales
+└── Desarrollo de software
+    └── Olores de código
+
+16. Ver referencias de un documento
+
+Cuando subes un archivo, el backend devuelve un id. Ese id es el SHA-256 del documento.
+
+Para ver los fragmentos de referencia de ese documento, abre:
+
+http://127.0.0.1:8000/api/materials/TU_MATERIAL_ID/references
+
+Ejemplo:
+
+http://127.0.0.1:8000/api/materials/795bf0f88957f8b24eb06de95bfb50bdda8396873634de0d1ff79016d4aae7cd/references
+
+Esto muestra los extractos usados como referencia para las preguntas.
+
+17. Borrar datos de prueba
+
+Para borrar solo el banco de preguntas, usa en Swagger:
+
+DELETE /api/question-bank
+
+Para borrar solo el bosque de conocimiento, usa:
+
+DELETE /api/knowledge-forest
+
+Para limpiar todo desde cero:
+
+1. Detén el servidor con CTRL + C.
+2. Borra la carpeta backend/storage.
+3. Vuelve a ejecutar el backend.
+
+La carpeta storage se creará otra vez automáticamente.
+
+18. Detener el backend
+
+En la terminal donde corre Uvicorn presiona:
+
+CTRL + C
+
+Eso detiene el servidor.
+
+19. Comandos rápidos después de la primera instalación
+
+Cuando ya tienes .venv, dependencias instaladas y .env configurado, solo necesitas:
+
+cd backend
+.venv\Scripts\activate
+python -m uvicorn main:app --reload
+
+Luego abre:
+
+http://127.0.0.1:8000/docs
+
+20. Problemas comunes
+
+Problema:
+uvicorn no se reconoce.
+
+Solución:
+Asegúrate de activar el entorno virtual:
+
+.venv\Scripts\activate
+
+Luego instala dependencias:
+
+pip install -r requirements.txt
+
+Y ejecuta:
+
+python -m uvicorn main:app --reload
+
+Problema:
+ai_configured aparece como false.
+
+Solución:
+Revisa que .env exista dentro de backend y que tenga:
+
+OPENAI_BASE_URL
+OPENAI_API_KEY
+MODEL
+
+Problema:
+Error 400 formato no soportado.
+
+Solución:
+Sube solo archivos:
+
+PDF
+DOCX
+TXT
+MD
+
+Problema:
+El archivo tiene muy poco texto útil.
+
+Solución:
+El PDF puede estar escaneado como imagen. Usa un PDF con texto seleccionable, un DOCX o un TXT.
+
+Problema:
+No aparecen preguntas.
+
+Solución:
+Revisa:
+
+http://127.0.0.1:8000/api/question-bank
+
+Si total es 0, vuelve a subir el documento y revisa si la generación terminó sin errores.
+
+Problema:
+El archivo sale como duplicado.
+
+Solución:
+Eso significa que ya se subió antes. El sistema detecta duplicados usando SHA-256.
+
+Si quieres probar desde cero, borra backend/storage.
+
+21. Flujo de prueba recomendado
+
+1. Clonar el repositorio.
+2. Entrar a backend.
+3. Crear y activar entorno virtual.
+4. Instalar dependencias.
+5. Crear .env desde .env.example.
+6. Ejecutar el backend.
+7. Abrir /api/health.
+8. Confirmar ai_configured = true.
+9. Subir un PDF o DOCX en /api/materials/upload.
+10. Revisar /api/question-bank.
+11. Revisar /egel/banco_preguntas.js.
+12. Revisar /api/knowledge-forest.
+13. Revisar /api/materials/{id}/references.
+
+22. Resumen de comandos principales
+
+Clonar proyecto:
+
+git clone URL_DEL_REPOSITORIO
+
+Entrar al proyecto:
+
+cd applied-studies-llm
+
+Entrar al backend:
+
+cd backend
+
+Crear entorno virtual:
+
+python -m venv .venv
+
+Activar entorno virtual:
+
+.venv\Scripts\activate
+
+Instalar dependencias:
+
+pip install -r requirements.txt
+
+Copiar .env.example:
+
+copy .env.example .env
+
+Ejecutar backend:
+
+python -m uvicorn main:app --reload
+
+Abrir Swagger:
+
+http://127.0.0.1:8000/docs
+
+FIN DEL MANUAL
