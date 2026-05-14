@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador EGEL PLUS para ICC</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 50%;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        #topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        #timer {
+            font-weight: bold;
+        }
+
+        #nav {
+            margin-bottom: 10px;
+        }
+
+        .area-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            margin-top: 10px;
+        }
+
+        .area-picker label {
+            background: white;
+            border-radius: 999px;
+            padding: 6px 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .question-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: space-between;
+        }
+
+        .question-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-badge {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid #c7c7c7;
+            background: #fff7d6;
+            font-size: 13px;
+            cursor: help;
+        }
+
+        .info-badge .tooltip {
+            position: absolute;
+            top: 28px;
+            right: 0;
+            width: 220px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: #222;
+            color: white;
+            font-size: 12px;
+            line-height: 1.35;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-4px);
+            transition: opacity 0.15s ease, transform 0.15s ease;
+            z-index: 10;
+        }
+
+        .info-badge:hover .tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="topbar">
+            <h2>Simulador EGEL PLUS para ICC</h2>
+            <h4>por David Emmanuel Santana Romero</h4>
+            <div id="timer">Tiempo: 00:00</div>
+        </div>
+        <div id="levelSelector" style="margin-bottom:15px;">
+            <label><strong>Nivel de estudio:</strong></label>
+            <select id="level">
+                <option value="Ligero">Ligero (15 preguntas / 5 min)</option>
+                <option value="Moderado">Moderado (25 preguntas / 10 min)</option>
+                <option value="Intermedio" selected>Intermedio (40 preguntas / 15 min)</option>
+                <option value="Avanzado">Avanzado (60 preguntas / 25 min)</option>
+                <option value="CENEVAL">CENEVAL (140 preguntas / 180 min)</option>
+            </select>
+            <div style="margin-top:10px;">
+                <label><strong>Áreas incluidas:</strong></label>
+                <div id="areaSelector" class="area-picker">
+                    <label><input type="checkbox" name="area" value="Algoritmia" checked> Algoritmia</label>
+                    <label><input type="checkbox" name="area" value="Desarrollo de software de base" checked> Desarrollo
+                        de software de base</label>
+                    <label><input type="checkbox" name="area" value="Desarrollo de software de aplicación" checked>
+                        Desarrollo de software de aplicación</label>
+                    <label><input type="checkbox" name="area" value="Soluciones de cómputo inteligente" checked>
+                        Soluciones de cómputo inteligente</label>
+                    <label><input type="checkbox" name="area" value="Lengua"> Lengua</label>
+                </div>
+            </div>
+            <div style="margin-top:10px;">
+                <label><input type="checkbox" id="includeSynthetic"> Incluir preguntas generadas por IA</label>
+            </div>
+            <button onclick="startSelectedLevel()">Iniciar</button>
+        </div>
+        <div id="nav"></div>
+        <div id="quiz"></div>
+        <h3 id="result"></h3>
+    </div>
+
+    <script src="./egel/banco_preguntas.js"></script>
+    <script>
+        const questionBank = Array.isArray(window.questions)
+            ? window.questions.map(q => ({ synthetic: false, ...q }))
+            : [];
+        const AVAILABLE_AREAS = [
+            "Algoritmia",
+            "Desarrollo de software de base",
+            "Desarrollo de software de aplicación",
+            "Soluciones de cómputo inteligente",
+            "Lengua",
+        ];
+
+        if (questionBank.length === 0) {
+            document.getElementById("result").innerHTML = "No se pudo cargar el banco de preguntas desde ./egel/banco_preguntas.js";
+        }
+
+
+        let sessionQuestions = [];
+        let timeLeft = 0;
+        let timerInterval;
+        let SESSION_SIZE = 0;
+
+        const STUDY_LEVELS = {
+            "Ligero": { questions: 15, time: 5 },
+            "Moderado": { questions: 25, time: 10 },
+            "Intermedio": { questions: 40, time: 15 },
+            "Avanzado": { questions: 60, time: 25 },
+            "CENEVAL": { questions: 140, time: 180 }
+        };
+
+        function getSelectedAreas() {
+            return Array.from(document.querySelectorAll('input[name="area"]:checked'))
+                .map(input => input.value)
+                .filter(area => AVAILABLE_AREAS.includes(area));
+        }
+
+        function includeSyntheticQuestions() {
+            return Boolean(document.getElementById("includeSynthetic")?.checked);
+        }
+
+        function shuffleSyntheticOptions(question) {
+            if (!question.synthetic) {
+                return { ...question, options: [...question.options] };
+            }
+
+            const decorated = question.options.map((text, index) => ({
+                text,
+                isAnswer: index === question.answer,
+            }));
+
+            shuffle(decorated);
+
+            return {
+                ...question,
+                options: decorated.map(option => option.text),
+                answer: decorated.findIndex(option => option.isAnswer),
+            };
+        }
+
+        function startSelectedLevel() {
+            let level = document.getElementById("level").value;
+            let config = STUDY_LEVELS[level];
+            let selectedAreas = getSelectedAreas();
+            let allowSynthetic = includeSyntheticQuestions();
+
+            clearInterval(timerInterval);
+            SESSION_SIZE = config.questions;
+            timeLeft = config.time * 60;
+
+            currentIndex = 0;
+            answers = {};
+
+            if (selectedAreas.length === 0) {
+                document.getElementById("result").innerHTML = "Selecciona al menos un área para iniciar la simulación.";
+                return;
+            }
+
+            pickSession(selectedAreas, allowSynthetic);
+            if (sessionQuestions.length === 0) {
+                document.getElementById("result").innerHTML = "No hay preguntas disponibles para iniciar la sesión.";
+                return;
+            }
+
+            document.getElementById("result").innerHTML = "";
+            startTimer();
+            renderQuestion();
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+
+        function pickSession(selectedAreas, allowSynthetic) {
+            let areas = Object.fromEntries(AVAILABLE_AREAS.map(area => [area, []]));
+            areas["Otro"] = [];
+            questionBank
+                .filter(question => allowSynthetic || !question.synthetic)
+                .forEach(q => areas[q.area]?.push(q) ?? areas["Otro"].push(q));
+
+            Object.keys(areas).forEach(area => shuffle(areas[area]));
+
+            const selectedPoolSize = selectedAreas.reduce((total, area) => total + areas[area].length, 0);
+            const targetSize = Math.min(SESSION_SIZE, selectedPoolSize);
+            const perArea = Math.floor(targetSize / selectedAreas.length);
+            const remainder = targetSize % selectedAreas.length;
+
+            sessionQuestions = [];
+
+            selectedAreas.forEach((area, index) => {
+                const quota = perArea + (index < remainder ? 1 : 0);
+                sessionQuestions.push(...areas[area].splice(0, quota));
+            });
+
+            if (sessionQuestions.length < targetSize) {
+                const remaining = shuffle([
+                    ...selectedAreas.flatMap(area => areas[area]),
+                ]);
+                sessionQuestions.push(...remaining.slice(0, targetSize - sessionQuestions.length));
+            }
+
+            sessionQuestions = shuffle(sessionQuestions.map(shuffleSyntheticOptions));
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                let min = Math.floor(timeLeft / 60);
+                let sec = timeLeft % 60;
+                document.getElementById("timer").innerText = `Tiempo: ${min}:${sec.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        let currentIndex = 0;
+        let answers = {};
+
+        function renderQuestion() {
+            let quizDiv = document.getElementById("quiz");
+            let navDiv = document.getElementById("nav");
+            quizDiv.innerHTML = "";
+            navDiv.innerHTML = "";
+
+            let item = sessionQuestions[currentIndex];
+            if (!item) {
+                document.getElementById("result").innerHTML = "No se pudo renderizar la pregunta actual.";
+                return;
+            }
+
+            let div = document.createElement("div");
+            div.classList.add("card");
+            const syntheticInfo = item.synthetic
+                ? `<span class="info-badge">ℹ️<span class="tooltip">Pregunta generada por IA. Verifica el contenido antes de usarla como referencia definitiva.</span></span>`
+                : "";
+            div.innerHTML = `<div class="question-head"><p><strong>${currentIndex + 1} / ${sessionQuestions.length}</strong></p><div class="question-meta">${syntheticInfo}</div></div><p>${item.q}</p>` +
+                item.options.map((opt, j) =>
+                    `<label><input type="radio" name="q" value="${j}" ${answers[currentIndex] == j ? "checked" : ""}> ${opt}</label><br>`
+                ).join("");
+            quizDiv.appendChild(div);
+
+            let prev = document.createElement("button");
+            prev.innerText = "Anterior";
+            prev.onclick = () => {
+                saveAnswer();
+                if (currentIndex > 0) { currentIndex--; renderQuestion(); }
+            };
+
+            let next = document.createElement("button");
+
+            if (currentIndex < sessionQuestions.length - 1) {
+                next.innerText = "Siguiente";
+                next.onclick = () => {
+                    saveAnswer();
+                    if (currentIndex < sessionQuestions.length - 1) { currentIndex++; renderQuestion(); }
+                };
+            } else {
+                next.innerText = "Evaluar";
+                next.onclick = () => {
+                    saveAnswer();
+                    submitQuiz();
+                };
+            }
+
+            navDiv.appendChild(prev);
+            navDiv.appendChild(next);
+        }
+
+        function saveAnswer() {
+            let selected = document.querySelector(`input[name="q"]:checked`);
+            if (selected) answers[currentIndex] = parseInt(selected.value);
+        }
+
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            let score = 0;
+            let areaStats = {};
+            let subareaStats = {};
+
+            sessionQuestions.forEach((item, i) => {
+                if (!areaStats[item.area]) areaStats[item.area] = { correct: 0, total: 0 };
+                areaStats[item.area].total++;
+
+                if (item.subarea) {
+                    if (!subareaStats[item.subarea]) subareaStats[item.subarea] = { correct: 0, total: 0 };
+                    subareaStats[item.subarea].total++;
+                }
+
+                let selected = answers[i];
+                if (selected !== undefined && selected === item.answer) {
+                    score++;
+                    areaStats[item.area].correct++;
+                    if (item.subarea) subareaStats[item.subarea].correct++;
+                }
+            });
+
+            let result = document.getElementById("result");
+            let breakdown = Object.keys(areaStats).map(a => {
+                let s = areaStats[a];
+                return `${a}: ${s.correct}/${s.total}`;
+            }).join(" | ");
+
+            let subareaBreakdown = Object.keys(subareaStats).map(a => {
+                let s = subareaStats[a];
+                return `${a}: ${s.correct}/${s.total}`;
+            }).join(" | ");
+
+            let html = `<p><strong>Resultado:</strong> ${score}/${sessionQuestions.length}</p>`;
+            html += `<p>${breakdown}</p>`;
+            if (subareaBreakdown) html += `<p>${subareaBreakdown}</p>`;
+            html += `<table border="1" cellpadding="5" cellspacing="0" style="border-collapse:collapse; width:100%;">`;
+            html += `<tr><th>#</th><th>Área</th><th>Subárea</th><th>Origen</th><th>Pregunta</th><th>Tu respuesta</th><th>Correcta</th></tr>`;
+
+            sessionQuestions.forEach((item, i) => {
+                let userAns = answers[i] !== undefined ? item.options[answers[i]] : "Sin respuesta";
+                let correctAns = item.options[item.answer];
+                let isCorrect = answers[i] === item.answer;
+
+                html += `<tr style="background:${isCorrect ? '#c8f7c5' : '#f7c5c5'}">`;
+                html += `<td>${i + 1}</td>`;
+                html += `<td>${item.area}</td>`;
+                html += `<td>${item.subarea ?? "-"}</td>`;
+                html += `<td>${item.synthetic ? "IA" : "Banco"}</td>`;
+                html += `<td>${item.q}</td>`;
+                html += `<td>${userAns}</td>`;
+                html += `<td>${correctAns}</td>`;
+                html += `</tr>`;
+            });
+
+            html += `</table>`;
+
+            result.innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>
