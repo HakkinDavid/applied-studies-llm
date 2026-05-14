@@ -1,0 +1,1 @@
+# la idea es que este FastAPI backend gestione todo y sirva en "/" el HTML estático que mi sveltekit generará en frontend/build
