@@ -1,11 +1,13 @@
 DOCUMENTACIÓN DE app/routes/questions.py
 
-GET /api/question-bank:
-Devuelve preguntas en JSON.
+GET /api/question-bank: devuelve preguntas.
+DELETE /api/question-bank: borra todo el banco y limpia huérfanos.
+DELETE /api/question-bank/index/{question_index}: borra una pregunta por índice, empezando en 0.
+DELETE /api/question-bank/question/{question_id}: borra una pregunta por id.
+DELETE /api/question-bank/by-material/{material_id}: borra preguntas de un documento.
+DELETE /api/question-bank/by-tree/{tree_id}: borra preguntas de un árbol.
+DELETE /api/question-bank/by-node/{node_id}: borra preguntas de un nodo.
+DELETE /api/question-bank/by-leaf/{leaf_id}: borra preguntas de una hoja.
+GET /egel/banco_preguntas.js: devuelve window.questions = [...].
 
-DELETE /api/question-bank:
-Limpia el banco.
-
-GET /egel/banco_preguntas.js:
-Devuelve window.questions = [...] para mantener compatibilidad con el frontend.
-Las preguntas incluyen campos extra de referencia documental.
+Todos los borrados ejecutan cleanup_orphans().

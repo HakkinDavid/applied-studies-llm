@@ -1,0 +1,8 @@
+DOCUMENTACIÓN DE app/services/cleanup.py
+
+Implementa la limpieza de huérfanos.
+
+Limpia preguntas sin documento, preguntas sin árbol/nodo/hoja válida, referencias sin material, textos sin material, archivos subidos sin material, materiales sin respaldo, hojas sin referencias, nodos sin hojas y árboles sin nodos.
+
+La función principal es cleanup_orphans().
+También se puede ejecutar manualmente con POST /api/cleanup/orphans.

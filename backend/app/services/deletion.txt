@@ -1,0 +1,5 @@
+DOCUMENTACIÓN DE app/services/deletion.py
+
+Centraliza borrados específicos.
+Permite borrar materiales, preguntas, árboles, nodos y hojas.
+Después de cada borrado ejecuta cleanup_orphans().

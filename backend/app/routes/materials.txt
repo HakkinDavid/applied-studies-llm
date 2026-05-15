@@ -16,3 +16,6 @@ Cada pregunta generada incluye referencia al documento:
 - source_page
 - source_excerpt
 - source_ref_id
+
+
+DELETE /api/materials/{material_id}: borra un documento específico y ejecuta limpieza de huérfanos.

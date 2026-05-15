@@ -5,6 +5,7 @@ from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from app.core.config import DEFAULT_QUESTION_COUNT
 from app.core.paths import TEXTS_DIR, UPLOADS_DIR
 from app.models.schemas import MaterialListResponse, MaterialReferencesResponse, MaterialResponse
+from app.services.deletion import delete_material_by_id
 from app.services.files import calculate_sha256, validate_file
 from app.services.materials import build_material_metadata, process_material_text
 from app.services.storage import (
@@ -187,3 +188,9 @@ def get_material_references(material_id: str):
         total=len(references),
         references=references,
     )
+
+
+
+@router.delete("/api/materials/{material_id}")
+def delete_material(material_id: str):
+    return delete_material_by_id(material_id)
