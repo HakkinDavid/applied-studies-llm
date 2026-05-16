@@ -231,7 +231,7 @@
 		Anterior
 	</button>
 	<div class="text-sm text-gray-700">
-		Tiempo: {formatTime(timeLeft)} · {answered}/{session.length} respondidas
+		Tiempo: {formatTime(timeLeft)} con {answered}/{session.length} respondidas
 	</div>
 	<button
 		type="button"
