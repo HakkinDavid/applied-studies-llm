@@ -1,5 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import BackendPanel from '$lib/components/BackendPanel.svelte';
+	import ForestPanel from '$lib/components/ForestPanel.svelte';
+	import MaterialsPanel from '$lib/components/MaterialsPanel.svelte';
+	import QuizPanel from '$lib/components/QuizPanel.svelte';
 	import {
 		normalizeQuestion,
 		type HealthResponse,
@@ -10,7 +14,8 @@
 		type MaterialReference,
 		type MaterialReferencesResponse,
 		type Question,
-		type QuestionBankResponse
+		type QuestionBankResponse,
+		type UploadInput
 	} from '$lib/components/model';
 
 	let apiBase = $state('');
@@ -22,11 +27,15 @@
 	let forest = $state<KnowledgeForest | null>(null);
 	let compatibleJsCount = $state<number | null>(null);
 	let loadingAll = $state(false);
+	let loadingReferences = $state(false);
+	let uploading = $state(false);
 	let error = $state('');
 	let notice = $state('');
 
+
 	onMount(() => {
-		apiBase = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
+		apiBase =
+			import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
 		void refreshAll();
 	});
 
@@ -38,7 +47,8 @@
 		let body: unknown = text;
 		try {
 			body = text ? JSON.parse(text) : null;
-		} catch {}
+		} catch {
+		}
 		if (!response.ok) {
 			const detail =
 				typeof body === 'object' && body && 'detail' in body
@@ -94,6 +104,64 @@
 				.replace(/;\s*$/, '')
 		).length;
 	}
+
+
+	async function uploadMaterial({ file, treeHint, numQuestions }: UploadInput) {
+		if (!file) {
+			fail('Selecciona un archivo.');
+			return;
+		}
+		uploading = true;
+		error = '';
+		notice = '';
+
+		const form = new FormData();
+		form.append('file', file);
+		form.append('num_questions', String(numQuestions));
+		if (treeHint.trim()) form.append('tree_hint', treeHint.trim());
+
+		try {
+			const material = await api<Material>('/api/materials/upload', { method: 'POST', body: form });
+			notice = `${material.original_filename}: ${material.generated_questions} preguntas disponibles.`;
+			selectedMaterialId = material.id;
+			await Promise.all([
+				api<QuestionBankResponse>('/api/question-bank').then(
+					(data) => (questions = data.questions.map(normalizeQuestion))
+				),
+				refreshMaterials(),
+				api<KnowledgeForestResponse>('/api/knowledge-forest').then(
+					(data) => (forest = data.forest)
+				),
+				refreshCompatibleJs()
+			]);
+		} catch (problem) {
+			fail(problem);
+		}
+		uploading = false;
+	}
+
+	async function clearQuestionBank() {
+		if (!confirm('Borrar el banco de preguntas generado?')) return;
+		try {
+			await api('/api/question-bank', { method: 'DELETE' });
+			questions = [];
+			await refreshCompatibleJs();
+			notice = 'Banco de preguntas borrado.';
+		} catch (problem) {
+			fail(problem);
+		}
+	}
+
+	async function clearKnowledgeForest() {
+		if (!confirm('Borrar el bosque de conocimiento?')) return;
+		try {
+			await api('/api/knowledge-forest', { method: 'DELETE' });
+			forest = { trees: {} };
+			notice = 'Bosque de conocimiento borrado.';
+		} catch (problem) {
+			fail(problem);
+		}
+	}
 </script>
 
 <svelte:head><title>Applied Studies LLM</title></svelte:head>
@@ -126,5 +194,19 @@
 			>
 				{notice}
 			</div>{/if}
+
+		<BackendPanel
+			{apiBase}
+			{health}
+			questionsCount={questions.length}
+			{compatibleJsCount}
+			loading={loadingAll}
+			{uploading}
+			setApiBase={(value) => (apiBase = value)}
+			refresh={refreshAll}
+			upload={uploadMaterial}
+			clearQuestions={clearQuestionBank}
+			clearForest={clearKnowledgeForest}
+		/>
 	</div>
 </main>
