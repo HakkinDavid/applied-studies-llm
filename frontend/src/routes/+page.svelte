@@ -25,7 +25,6 @@
 	let references = $state<MaterialReference[]>([]);
 	let questions = $state<Question[]>([]);
 	let forest = $state<KnowledgeForest | null>(null);
-	let compatibleJsCount = $state<number | null>(null);
 	let loadingAll = $state(false);
 	let loadingReferences = $state(false);
 	let uploading = $state(false);
@@ -82,8 +81,7 @@
 				(data) => (questions = data.questions.map(normalizeQuestion))
 			),
 			refreshMaterials(),
-			api<KnowledgeForestResponse>('/api/knowledge-forest').then((data) => (forest = data.forest)),
-			refreshCompatibleJs()
+			api<KnowledgeForestResponse>('/api/knowledge-forest').then((data) => (forest = data.forest))
 		]);
 		const rejected = jobs.find((job) => job.status === 'rejected');
 		if (rejected?.status === 'rejected') fail(rejected.reason);
@@ -100,18 +98,6 @@
 			? (await api<MaterialReferencesResponse>(`/api/materials/${selectedMaterialId}/references`))
 					.references
 			: [];
-	}
-
-	async function refreshCompatibleJs() {
-		const response = await fetch(url('/egel/banco_preguntas.js'));
-		if (!response.ok)
-			throw new Error(`No se pudo cargar /egel/banco_preguntas.js (${response.status})`);
-		compatibleJsCount = JSON.parse(
-			(await response.text())
-				.trim()
-				.replace(/^window\.questions\s*=\s*/, '')
-				.replace(/;\s*$/, '')
-		).length;
 	}
 
 	async function loadReferences(id: string) {
@@ -152,8 +138,7 @@
 				refreshMaterials(),
 				api<KnowledgeForestResponse>('/api/knowledge-forest').then(
 					(data) => (forest = data.forest)
-				),
-				refreshCompatibleJs()
+				)
 			]);
 		} catch (problem) {
 			fail(problem);
@@ -166,7 +151,6 @@
 		try {
 			await api('/api/question-bank', { method: 'DELETE' });
 			questions = [];
-			await refreshCompatibleJs();
 			notice = 'Banco de preguntas borrado.';
 		} catch (problem) {
 			fail(problem);
@@ -222,7 +206,6 @@
 			{apiBase}
 			{health}
 			questionsCount={questions.length}
-			{compatibleJsCount}
 			loading={loadingAll}
 			{uploading}
 			setApiBase={(value) => (apiBase = value)}

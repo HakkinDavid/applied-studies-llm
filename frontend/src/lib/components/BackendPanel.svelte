@@ -5,7 +5,6 @@
 		apiBase,
 		health,
 		questionsCount,
-		compatibleJsCount,
 		loading,
 		uploading,
 		setApiBase,
@@ -17,7 +16,6 @@
 		apiBase: string;
 		health: HealthResponse | null;
 		questionsCount: number;
-		compatibleJsCount: number | null;
 		loading: boolean;
 		uploading: boolean;
 		setApiBase: (value: string) => void;
@@ -64,10 +62,9 @@
 					</span>
 				</div>
 				<div><strong>IA:</strong> {health?.ai_configured ? 'configurada' : 'sin configurar'}</div>
-				<div><strong>Modelo:</strong> {health?.model || '-'}</div>
-				<div><strong>Base URL:</strong> {health?.base_url || '-'}</div>
+				<div><strong>Modelo:</strong> {health?.model || 'n/a'}</div>
+				<div><strong>Base URL:</strong> {health?.base_url || 'n/a'}</div>
 				<div><strong>Preguntas JSON:</strong> {questionsCount}</div>
-				<div><strong>JS compatible:</strong> {compatibleJsCount ?? '-'}</div>
 			</div>
 		</div>
 
