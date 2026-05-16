@@ -43,8 +43,8 @@
 					class="w-full rounded border-gray-300 text-sm"
 					type="text"
 					placeholder="http://localhost:8000"
-					value={apiBase}
-					oninput={(event) => setApiBase(event.currentTarget.value)}
+					value={apiBase ?? ''}
+					oninput={(event) => setApiBase(event.currentTarget.value ?? '')}
 				/>
 				<button
 					type="button"

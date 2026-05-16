@@ -38,19 +38,26 @@
 	const forestTrees = $derived(Object.values(forest?.trees ?? {}));
 
 	onMount(() => {
-		apiBase = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
+		const configuredBase = import.meta.env.VITE_API_BASE_URL;
+		apiBase =
+			typeof configuredBase === 'string' && configuredBase
+				? configuredBase.replace(/\/$/, '')
+				: 'http://localhost:8000'; // yo cuando el loco es host o como
 		void refreshAll();
 	});
 
-	const url = (path: string) => `${apiBase.replace(/\/$/, '')}${path}`;
+	const url = (path: string) =>
+		`${(typeof apiBase === 'string' ? apiBase : '').replace(/\/$/, '')}${path}`;
 
 	async function api<T>(path: string, init?: RequestInit) {
 		const response = await fetch(url(path), init);
 		const text = await response.text();
-		let body: unknown = text;
+		let body: unknown;
 		try {
 			body = text ? JSON.parse(text) : null;
-		} catch {}
+		} catch {
+			body = text || null;
+		}
 		if (!response.ok) {
 			const detail =
 				typeof body === 'object' && body && 'detail' in body
