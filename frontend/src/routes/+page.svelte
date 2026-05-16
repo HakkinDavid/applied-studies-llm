@@ -35,10 +35,10 @@
 	const selectedMaterial = $derived(
 		materials.find((material) => material.id === selectedMaterialId) ?? null
 	);
+	const forestTrees = $derived(Object.values(forest?.trees ?? {}));
 
 	onMount(() => {
-		apiBase =
-			import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
+		apiBase = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '');
 		void refreshAll();
 	});
 
@@ -50,8 +50,7 @@
 		let body: unknown = text;
 		try {
 			body = text ? JSON.parse(text) : null;
-		} catch {
-		}
+		} catch {}
 		if (!response.ok) {
 			const detail =
 				typeof body === 'object' && body && 'detail' in body
@@ -225,7 +224,7 @@
 		/>
 
 		<QuizPanel {questions} />
-        <!--yo cuando me materializo-->
+		<!--yo cuando me materializo-->
 		<MaterialsPanel
 			{materials}
 			{selectedMaterial}
@@ -234,6 +233,8 @@
 			{loadingReferences}
 			{loadReferences}
 		/>
-		
+		<!--jugaremos en el bosque mientras el mtro. ortega no está, porque si de pronto aparece los comentarios nos leerá-->
+		<ForestPanel trees={forestTrees} />
+        <!--profe profe esta ahi??-->
 	</div>
 </main>
