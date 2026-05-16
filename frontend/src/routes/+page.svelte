@@ -167,8 +167,9 @@
 		<header
 			class="mb-4 flex flex-col gap-3 border-b border-gray-300 pb-4 md:flex-row md:items-center md:justify-between"
 		>
-			<div>
-				<p class="text-xl text-gray-600">Applied Studies LLM</p>
+			<div class="flex flex-grow justify-center items-center gap-3">
+                <img class="w-18 h-18 inline" src="https://bonsanbec.dev/favicon.svg" alt="favicon">
+				<p class="text-xl text-black italic font-bold">Applied Studies LLM</p>
 			</div>
 			<button
 				type="button"
@@ -219,7 +220,7 @@
 	</div>
 
     <footer class="mt-4 text-center text-xs text-gray-500">
-        Inspirado por mi proyecto:
+        Inspirado por el proyecto:
         <a
             href="https://hakkindavid.github.io/CETYS/egel_prueba.html"
             class="text-blue-600 hover:underline"
