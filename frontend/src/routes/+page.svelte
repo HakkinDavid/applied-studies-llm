@@ -168,7 +168,7 @@
 			class="mb-4 flex flex-col gap-3 border-b border-gray-300 pb-4 md:flex-row md:items-center md:justify-between"
 		>
 			<div class="flex flex-grow justify-center items-center gap-3">
-                <img class="w-18 h-18 inline" src="https://bonsanbec.dev/favicon.svg" alt="favicon">
+                <img class="w-12 h-12 inline" src="https://bonsanbec.dev/favicon.svg" alt="favicon">
 				<p class="text-xl text-black italic font-bold">Applied Studies LLM</p>
 			</div>
 			<button
@@ -220,6 +220,10 @@
 	</div>
 
     <footer class="mt-4 text-center text-xs text-gray-500">
+        © Bonsanbec Developers {new Date().getFullYear()}
+        <br>
+        Desarrollado por David Emmanuel Santana Romero y Rafael Negrete Leyva
+        <br>
         Inspirado por el proyecto:
         <a
             href="https://hakkindavid.github.io/CETYS/egel_prueba.html"
