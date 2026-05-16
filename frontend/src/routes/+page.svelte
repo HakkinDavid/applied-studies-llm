@@ -162,7 +162,7 @@
 	}
 
 	async function clearQuestionBank() {
-		if (!confirm('Borrar el banco de preguntas generado?')) return;
+		if (!confirm('¿En serio? ¿Vas a borrarlo todo?')) return;
 		try {
 			await api('/api/question-bank', { method: 'DELETE' });
 			questions = [];
@@ -174,7 +174,7 @@
 	}
 
 	async function clearKnowledgeForest() {
-		if (!confirm('Borrar el bosque de conocimiento?')) return;
+		if (!confirm('¿Quieres tener amnesia? Te gusta, ¿verdad? Te encanta olvidar TODO lo que hemos preparado para ti en este sistema')) return;
 		try {
 			await api('/api/knowledge-forest', { method: 'DELETE' });
 			forest = { trees: {} };
@@ -195,7 +195,7 @@
 			class="mb-4 flex flex-col gap-3 border-b border-gray-300 pb-4 md:flex-row md:items-center md:justify-between"
 		>
 			<div>
-				<p class="text-sm text-gray-600">Applied Studies LLM</p>
+				<p class="text-xl text-gray-600">Applied Studies LLM</p>
 			</div>
 			<button
 				type="button"
