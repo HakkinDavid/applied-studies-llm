@@ -60,7 +60,12 @@
 		stopTimer();
 
 		if (selectedAreas.length === 0) {
-			error = 'Selecciona al menos un area para iniciar la simulacion.';
+			error = 'Selecciona al menos un area para iniciar la simulación.';
+			return;
+		}
+
+        if (questions.length < level.questions) {
+			error = 'No hay suficientes preguntas para iniciar la simulación en este nivel (faltan ' + (level.questions - questions.length) + ').';
 			return;
 		}
 
@@ -181,7 +186,7 @@
 			Nivel de estudio
 			<select class="mt-1 block w-full rounded border-gray-300 text-sm" bind:value={levelName}>
 				{#each LEVELS as levelItem (levelItem.name)}
-					<option value={levelItem.name}>
+					<option value={levelItem.name} disabled={levelItem.questions > questions.length}>
 						{levelItem.name} ({levelItem.questions} preguntas / {levelItem.time} min)
 					</option>
 				{/each}
