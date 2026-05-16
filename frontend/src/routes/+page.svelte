@@ -146,28 +146,6 @@
 		uploading = false;
 	}
 
-	async function clearQuestionBank() {
-		if (!confirm('¿En serio? ¿Vas a borrarlo todo?')) return;
-		try {
-			await api('/api/question-bank', { method: 'DELETE' });
-			questions = [];
-			notice = 'Banco de preguntas borrado.';
-		} catch (problem) {
-			fail(problem);
-		}
-	}
-
-	async function clearKnowledgeForest() {
-		if (!confirm('¿Quieres tener amnesia? Te gusta, ¿verdad? Te encanta olvidar TODO lo que hemos preparado para ti en este sistema')) return;
-		try {
-			await api('/api/knowledge-forest', { method: 'DELETE' });
-			forest = { trees: {} };
-			notice = 'Bosque de conocimiento borrado.';
-		} catch (problem) {
-			fail(problem);
-		}
-	}
-
     async function deleteMaterial(id: string) {
 		if (!confirm('¿En serio?')) return;
 		try {
@@ -222,8 +200,6 @@
 			setApiBase={(value) => (apiBase = value)}
 			refresh={refreshAll}
 			upload={uploadMaterial}
-			clearQuestions={clearQuestionBank}
-			clearForest={clearKnowledgeForest}
 		/>
 
 		<QuizPanel {questions} />

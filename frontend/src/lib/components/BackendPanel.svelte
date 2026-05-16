@@ -10,8 +10,6 @@
 		setApiBase,
 		refresh,
 		upload,
-		clearQuestions,
-		clearForest
 	}: {
 		apiBase: string;
 		health: HealthResponse | null;
@@ -21,8 +19,6 @@
 		setApiBase: (value: string) => void;
 		refresh: () => void | Promise<void>;
 		upload: (input: UploadInput) => void | Promise<void>;
-		clearQuestions: () => void | Promise<void>;
-		clearForest: () => void | Promise<void>;
 	} = $props();
 
 	let file = $state<File | null>(null);
@@ -113,20 +109,6 @@
 					disabled={uploading}
 				>
 					{uploading ? 'Procesando...' : 'Subir y generar'}
-				</button>
-				<button
-					type="button"
-					class="rounded border border-red-300 px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-					onclick={() => void clearQuestions()}
-				>
-					Borrar banco
-				</button>
-				<button
-					type="button"
-					class="rounded border border-red-300 px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-					onclick={() => void clearForest()}
-				>
-					Borrar bosque
 				</button>
 			</div>
 		</form>
