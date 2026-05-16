@@ -2,3 +2,5 @@ DOCUMENTACIÓN DE app/__init__.py
 
 Este archivo permite que la carpeta sea tratada como paquete de Python.
 No contiene lógica porque su función es habilitar imports internos limpios.
+
+orale eso yo no lo sabía

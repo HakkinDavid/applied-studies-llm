@@ -1,42 +1,5 @@
 BACKEND MODULAR - APPLIED STUDIES LLM
 
-
-Estructura:
-backend/
-├── main.py
-├── main.txt
-├── requirements.txt
-├── .env.example
-├── .gitignore
-└── app/
-    ├── core/
-    │   ├── config.py
-    │   ├── config.txt
-    │   ├── paths.py
-    │   └── paths.txt
-    ├── models/
-    │   ├── schemas.py
-    │   └── schemas.txt
-    ├── services/
-    │   ├── ai.py
-    │   ├── ai.txt
-    │   ├── files.py
-    │   ├── files.txt
-    │   ├── forest.py
-    │   ├── forest.txt
-    │   ├── materials.py
-    │   ├── materials.txt
-    │   ├── questions.py
-    │   ├── questions.txt
-    │   ├── storage.py
-    │   ├── storage.txt
-    │   ├── text.py
-    │   ├── text.txt
-    │   ├── utils.py
-    │   └── utils.txt
-    └── routes/
-
-
 Instalación:
 python -m venv .venv
 .venv\Scripts\activate

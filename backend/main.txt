@@ -4,9 +4,9 @@ Este archivo es el punto de entrada del backend.
 
 Responsabilidades:
 1. Crear la aplicación FastAPI.
-2. Configurar CORS para permitir comunicación con el frontend.
+2. Configurar CORS para permitir comunicación con el frontend. # ackshually ☝️🤓, el backend va a servir el frontend estático, no hay necesidad de CORS
 3. Registrar los routers de la aplicación.
-4. Mantener separada la lógica real en app/routes y app/services.
+4. Mantener separada la lógica en app/routes y app/services.
 
 Routers:
 - health: estado del backend.
