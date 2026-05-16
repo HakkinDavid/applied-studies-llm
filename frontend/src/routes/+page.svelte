@@ -32,6 +32,9 @@
 	let error = $state('');
 	let notice = $state('');
 
+	const selectedMaterial = $derived(
+		materials.find((material) => material.id === selectedMaterialId) ?? null
+	);
 
 	onMount(() => {
 		apiBase =
@@ -105,6 +108,18 @@
 		).length;
 	}
 
+	async function loadReferences(id: string) {
+		loadingReferences = true;
+		selectedMaterialId = id;
+		try {
+			references = (await api<MaterialReferencesResponse>(`/api/materials/${id}/references`))
+				.references;
+		} catch (problem) {
+			references = [];
+			fail(problem);
+		}
+		loadingReferences = false;
+	}
 
 	async function uploadMaterial({ file, treeHint, numQuestions }: UploadInput) {
 		if (!file) {
@@ -210,5 +225,15 @@
 		/>
 
 		<QuizPanel {questions} />
+        <!--yo cuando me materializo-->
+		<MaterialsPanel
+			{materials}
+			{selectedMaterial}
+			{selectedMaterialId}
+			{references}
+			{loadingReferences}
+			{loadReferences}
+		/>
+		
 	</div>
 </main>
