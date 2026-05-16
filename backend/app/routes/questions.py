@@ -17,11 +17,11 @@ def get_question_bank():
     return QuestionBankResponse(total=len(questions), questions=questions)
 
 
-@router.delete("/api/question-bank")
-def clear_question_bank():
-    save_question_bank([])
-    cleanup = cleanup_orphans()
-    return {"status": "ok", "message": "Banco de preguntas borrado.", "cleanup": cleanup}
+# @router.delete("/api/question-bank")
+# def clear_question_bank():
+#     save_question_bank([])
+#     cleanup = cleanup_orphans()
+#     return {"status": "ok", "message": "Banco de preguntas borrado.", "cleanup": cleanup}
 
 
 @router.delete("/api/question-bank/index/{question_index}")

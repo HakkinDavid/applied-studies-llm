@@ -31,16 +31,16 @@ def get_knowledge_forest():
     )
 
 
-@router.delete("/api/knowledge-forest")
-def clear_knowledge_forest():
-    save_knowledge_forest({"trees": {}})
-    cleanup = cleanup_orphans()
+# @router.delete("/api/knowledge-forest")
+# def clear_knowledge_forest():
+#     save_knowledge_forest({"trees": {}})
+#     cleanup = cleanup_orphans()
 
-    return {
-        "status": "ok",
-        "message": "Bosque de conocimiento borrado.",
-        "cleanup": cleanup,
-    }
+#     return {
+#         "status": "ok",
+#         "message": "Bosque de conocimiento borrado.",
+#         "cleanup": cleanup,
+#     }
 
 
 @router.post("/api/cleanup/orphans")
