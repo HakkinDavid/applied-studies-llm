@@ -15,13 +15,5 @@ DEFAULT_QUESTION_COUNT = int(os.getenv("DEFAULT_QUESTION_COUNT", "15"))
 
 ALLOWED_EXTENSIONS = {".pdf", ".txt", ".md", ".docx"}
 
-FRONTEND_COMPATIBLE_AREAS = [
-    "Algoritmia",
-    "Desarrollo de software de base",
-    "Desarrollo de software de aplicación",
-    "Soluciones de cómputo inteligente",
-    "Lengua",
-]
-
 MAX_REFERENCE_CHARS = 420
 MAX_REFERENCES_FOR_PROMPT = 45
