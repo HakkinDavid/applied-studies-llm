@@ -64,11 +64,6 @@
 			return;
 		}
 
-        if (questions.length < level.questions) {
-			error = 'No hay suficientes preguntas para iniciar la simulación en este nivel (faltan ' + (level.questions - questions.length) + ').';
-			return;
-		}
-
 		const buckets: Record<string, Question[]> = Object.fromEntries(
 			selectedAreas.map((area) => [area, [] as Question[]])
 		);
@@ -86,9 +81,9 @@
 			selectedAreas.reduce((sum, area) => sum + (buckets[area]?.length ?? 0), 0)
 		);
 
-		if (total === 0) {
-			error = 'No hay preguntas disponibles para iniciar la sesion.';
-			reset();
+        if (total < level.questions) {
+			error = 'No hay suficientes preguntas para iniciar la simulación en este nivel (faltan ' + (level.questions - total) + ').';
+            reset();
 			return;
 		}
 
