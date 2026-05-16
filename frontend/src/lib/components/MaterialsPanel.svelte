@@ -27,7 +27,7 @@
 		{#if materials.length === 0}
 			<p class="text-sm text-gray-700">Sin materiales registrados.</p>
 		{:else}
-			<div class="space-y-3">
+			<div class="max-h-[420px] space-y-3 overflow-auto">
 				{#each materials as material (material.id)}
 					<button
 						type="button"
