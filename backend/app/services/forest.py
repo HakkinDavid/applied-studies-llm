@@ -2,18 +2,11 @@ from typing import Any, Optional
 
 from fastapi import HTTPException
 
-from app.core.config import FRONTEND_COMPATIBLE_AREAS
+from app.services.areas import format_areas_for_prompt, normalize_dynamic_area
 from app.services.ai import call_ai_json
 from app.services.storage import load_knowledge_forest, save_knowledge_forest
 from app.services.text import limit_text_for_generation
 from app.services.utils import now_iso, slugify
-
-
-def normalize_frontend_area(area: Any) -> str:
-    if isinstance(area, str) and area in FRONTEND_COMPATIBLE_AREAS:
-        return area
-
-    return "Soluciones de cómputo inteligente"
 
 
 def summarize_forest_for_prompt(forest: dict[str, Any], max_chars: int = 9000) -> str:
@@ -22,18 +15,21 @@ def summarize_forest_for_prompt(forest: dict[str, Any], max_chars: int = 9000) -
 
     for tree in trees.values():
         lines.append(f"- Árbol: {tree.get('name', 'Sin nombre')}")
+
         description = tree.get("description", "")
         if description:
             lines.append(f"  Descripción: {description}")
 
         for node in tree.get("nodes", {}).values():
             lines.append(f"  - Nodo: {node.get('name', 'Sin nombre')}")
+
             node_description = node.get("description", "")
             if node_description:
                 lines.append(f"    Descripción: {node_description}")
 
             for leaf in node.get("leaves", {}).values():
                 lines.append(f"    - Hoja: {leaf.get('name', 'Sin nombre')}")
+
                 leaf_description = leaf.get("description", "")
                 if leaf_description:
                     lines.append(f"      Descripción: {leaf_description}")
@@ -51,7 +47,7 @@ def build_knowledge_classification_prompt(
     forest: dict[str, Any],
     tree_hint: Optional[str],
 ) -> str:
-    frontend_areas = ", ".join(FRONTEND_COMPATIBLE_AREAS)
+    suggested_areas = format_areas_for_prompt()
     forest_summary = summarize_forest_for_prompt(forest)
     hint_text = tree_hint.strip() if tree_hint and tree_hint.strip() else "No se proporcionó pista."
 
@@ -75,8 +71,15 @@ Pista opcional del usuario:
 Bosque actual:
 {forest_summary}
 
-Además, por compatibilidad con el frontend actual, elige una categoría general de esta lista:
-{frontend_areas}
+Áreas existentes detectadas por el backend:
+{suggested_areas}
+
+Regla importante sobre áreas:
+- Si el material corresponde claramente a una de las áreas existentes, usa exactamente ese mismo nombre.
+- Si el material no corresponde bien a ninguna área existente, crea una nueva área académica, clara y breve.
+- No crees áreas nuevas si una existente ya representa correctamente el material.
+- No uses una lista fija de áreas. Las áreas deben surgir del conocimiento acumulado.
+- Evita crear variantes innecesarias como "Algoritmia", "Algoritmos" y "Diseño de algoritmos" si ya existe una que representa el mismo contenido.
 
 Responde únicamente con JSON válido:
 {{
@@ -86,7 +89,7 @@ Responde únicamente con JSON válido:
   "node_description": "Descripción breve del nodo",
   "leaf_name": "Tema específico",
   "leaf_description": "Descripción breve de la hoja",
-  "frontend_area": "Una categoría exacta de compatibilidad",
+  "area_name": "Área existente exacta o nueva área propuesta",
   "summary": "Resumen breve del material"
 }}
 
@@ -114,14 +117,22 @@ def classify_material_for_forest(
             detail="La clasificación generada por el modelo no tiene formato válido.",
         )
 
+    tree_name = str(parsed.get("tree_name") or "Conocimiento general").strip()
+    node_name = str(parsed.get("node_name") or "Área general").strip()
+    leaf_name = str(parsed.get("leaf_name") or "Tema general").strip()
+
+    area_name = normalize_dynamic_area(
+        parsed.get("area_name") or parsed.get("frontend_area") or node_name
+    )
+
     return {
-        "tree_name": str(parsed.get("tree_name") or "Conocimiento general").strip(),
+        "tree_name": tree_name,
         "tree_description": str(parsed.get("tree_description") or "").strip(),
-        "node_name": str(parsed.get("node_name") or "Área general").strip(),
+        "node_name": node_name,
         "node_description": str(parsed.get("node_description") or "").strip(),
-        "leaf_name": str(parsed.get("leaf_name") or "Tema general").strip(),
+        "leaf_name": leaf_name,
         "leaf_description": str(parsed.get("leaf_description") or "").strip(),
-        "frontend_area": normalize_frontend_area(parsed.get("frontend_area")),
+        "frontend_area": area_name,
         "summary": str(parsed.get("summary") or "").strip(),
     }
 

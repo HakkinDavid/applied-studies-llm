@@ -3,9 +3,9 @@ from typing import Any, Optional
 
 from fastapi import HTTPException
 
-from app.core.config import FRONTEND_COMPATIBLE_AREAS, MAX_REFERENCES_FOR_PROMPT
+from app.core.config import MAX_REFERENCES_FOR_PROMPT
+from app.services.areas import format_areas_for_prompt, normalize_dynamic_area
 from app.services.ai import call_ai_json
-from app.services.forest import normalize_frontend_area
 from app.services.storage import load_question_bank, save_question_bank
 from app.services.text import limit_text_for_generation, references_for_prompt
 
@@ -69,6 +69,7 @@ def normalize_question(
         return None
 
     reference = get_reference_by_id(references, raw_question.get("source_ref_id"))
+
     if reference is None:
         reference = fallback_reference(references)
 
@@ -81,7 +82,7 @@ def normalize_question(
         "q": q,
         "options": clean_options,
         "answer": normalize_answer(raw_question.get("answer")),
-        "area": normalize_frontend_area(raw_question.get("area") or frontend_area),
+        "area": normalize_dynamic_area(raw_question.get("area") or frontend_area),
         "subarea": str(raw_question.get("subarea") or subarea).strip(),
         "synthetic": True,
         "source_material_id": material_id,
@@ -107,7 +108,7 @@ def build_question_generation_prompt(
     frontend_area: str,
     forest_location: dict[str, str],
 ) -> str:
-    frontend_areas = ", ".join(FRONTEND_COMPATIBLE_AREAS)
+    suggested_areas = format_areas_for_prompt()
     reference_block = references_for_prompt(references, max_items=MAX_REFERENCES_FOR_PROMPT)
 
     return f"""
@@ -130,13 +131,16 @@ Ruta: {forest_location["knowledge_path"]}
 Referencias disponibles del documento:
 {reference_block}
 
+Áreas existentes detectadas:
+{suggested_areas}
+
 Formato exacto esperado:
 [
   {{
     "q": "Texto de la pregunta",
     "options": ["Opción 1", "Opción 2", "Opción 3", "Opción 4"],
     "answer": 0,
-    "area": "Soluciones de cómputo inteligente",
+    "area": "{frontend_area}",
     "subarea": "Tema específico",
     "synthetic": true,
     "source_ref_id": "p1-1"
@@ -152,8 +156,10 @@ Reglas:
 - El campo "answer" debe ser un número de 0 a 3.
 - El campo "synthetic" siempre debe ser true.
 - El campo "source_ref_id" debe ser uno de los ids de referencias disponibles.
-- El campo "area" debe ser uno de estos valores exactos: {frontend_areas}.
-- Para compatibilidad, usa preferentemente esta area: {frontend_area}.
+- Si la pregunta corresponde claramente a una de las áreas existentes, usa exactamente ese mismo nombre en "area".
+- Si no corresponde a ninguna, usa esta nueva área propuesta para este material: {frontend_area}.
+- No inventes áreas diferentes entre preguntas del mismo documento si todas pertenecen al mismo tema.
+- No crees variantes innecesarias de áreas ya existentes.
 - El campo "subarea" debe relacionarse con la hoja del bosque: {forest_location["leaf_name"]}.
 - Las preguntas deben evaluar comprensión, no solo memorización literal.
 - Evita preguntas ambiguas.
