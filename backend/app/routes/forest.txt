@@ -1,7 +1,10 @@
 DOCUMENTACIÓN DE app/routes/forest.py
 
-GET /api/knowledge-forest:
-Devuelve árboles, nodos y hojas.
+GET /api/knowledge-forest: devuelve el bosque.
+DELETE /api/knowledge-forest: borra el bosque completo y limpia huérfanos.
+POST /api/cleanup/orphans: ejecuta limpieza manual.
+DELETE /api/knowledge-forest/trees/{tree_id}: borra un árbol.
+DELETE /api/knowledge-forest/trees/{tree_id}/nodes/{node_id}: borra un nodo.
+DELETE /api/knowledge-forest/trees/{tree_id}/nodes/{node_id}/leaves/{leaf_id}: borra una hoja.
 
-DELETE /api/knowledge-forest:
-Limpia el bosque para pruebas.
+Todos los borrados ejecutan cleanup_orphans().

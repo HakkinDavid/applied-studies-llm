@@ -1,3 +1,4 @@
+import hashlib
 from typing import Any, Optional
 
 from fastapi import HTTPException
@@ -7,6 +8,11 @@ from app.services.ai import call_ai_json
 from app.services.forest import normalize_frontend_area
 from app.services.storage import load_question_bank, save_question_bank
 from app.services.text import limit_text_for_generation, references_for_prompt
+
+
+def build_question_id(material_id: str, question_text: str) -> str:
+    raw = f"{material_id}:{question_text}".encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()[:16]
 
 
 def normalize_answer(answer: Any) -> int:
@@ -71,6 +77,7 @@ def normalize_question(
     source_excerpt = reference.get("excerpt") if reference else None
 
     return {
+        "question_id": build_question_id(material_id, q),
         "q": q,
         "options": clean_options,
         "answer": normalize_answer(raw_question.get("answer")),
