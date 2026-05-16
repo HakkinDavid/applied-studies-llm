@@ -168,6 +168,16 @@
 		}
 	}
 
+    async function deleteMaterial(id: string) {
+		if (!confirm('¿En serio?')) return;
+		try {
+			await api(`/api/question-bank/by-material/${id}`, { method: 'DELETE' });
+			notice = 'Material borrado.';
+		} catch (problem) {
+			fail(problem);
+		}
+	}
+
     // la neta la neta el ts está bien chafa pero pues más chafa es volverse loquito buscando quién es [object Object] (no soy yo)
 </script>
 
@@ -224,6 +234,7 @@
 			{references}
 			{loadingReferences}
 			{loadReferences}
+            {deleteMaterial}
 		/>
 		<!--jugaremos en el bosque mientras el mtro. ortega no está, porque si de pronto aparece los comentarios nos leerá-->
 		<ForestPanel trees={forestTrees} />

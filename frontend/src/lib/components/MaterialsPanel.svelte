@@ -8,7 +8,8 @@
 		selectedMaterialId,
 		references,
 		loadingReferences,
-		loadReferences
+		loadReferences,
+		deleteMaterial
 	}: {
 		materials: Material[];
 		selectedMaterial: Material | null;
@@ -16,6 +17,7 @@
 		references: MaterialReference[];
 		loadingReferences: boolean;
 		loadReferences: (id: string) => void | Promise<void>;
+		deleteMaterial: (id: string) => void | Promise<void>;
 	} = $props();
 </script>
 
@@ -49,6 +51,17 @@
 						{#if material.duplicate}<div class="mt-1 text-yellow-700">
 								Duplicado SHA-256 reutilizado.
 							</div>{/if}
+						<div class="mt-4">
+							<!-- svelte-ignore a11y_click_events_have_key_events -->
+							<!-- svelte-ignore a11y_no_static_element_interactions -->
+							<!-- svelte-ignore a11y_missing_attribute -->
+							<a
+								class="rounded border border-red-300 px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+								onclick={() => void deleteMaterial(material.id)}
+							>
+								Borrar material
+							</a>
+						</div>
 					</button>
 				{/each}
 			</div>
