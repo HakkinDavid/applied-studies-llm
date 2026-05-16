@@ -1,3 +1,5 @@
 # allow crawling everything by default
 User-agent: *
 Disallow:
+# e q rollo robots.txt como q permitir q nos roben todo
+# como cambio eso
