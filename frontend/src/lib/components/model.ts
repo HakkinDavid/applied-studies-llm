@@ -113,14 +113,6 @@ export type UploadInput = {
 	numQuestions: number;
 };
 
-export const AREAS = [
-	'Algoritmia',
-	'Desarrollo de software de base',
-	'Desarrollo de software de aplicación',
-	'Soluciones de cómputo inteligente',
-	'Lengua'
-];
-
 export const LEVELS: StudyLevel[] = [
 	{ name: 'Ligero', questions: 15, time: 5 },
 	{ name: 'Moderado', questions: 25, time: 10 },

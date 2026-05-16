@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { AREAS, LEVELS, areaOf, formatTime, pageLabel, subareaOf } from './model';
+	import { LEVELS, areaOf, formatTime, pageLabel, subareaOf } from './model';
 	import type { Question, ResultRow } from './model';
 
 	let { questions }: { questions: Question[] } = $props();
 
 	let levelName = $state('Intermedio');
-	let selectedAreas = $state<string[]>([...AREAS]);
+	let selectedAreas = $state<string[]>([]);
 	let includeSynthetic = $state(true);
 	let session = $state<Question[]>([]);
 	let answers = $state<Record<number, number>>({});
@@ -15,20 +15,31 @@
 	let quizState = $state<'idle' | 'running' | 'finished'>('idle');
 	let rows = $state<ResultRow[]>([]);
 	let error = $state('');
+	let knownAreaKey = '';
 	let timer: ReturnType<typeof setInterval> | null = null;
 
 	const level = $derived(LEVELS.find((item) => item.name === levelName) ?? LEVELS[2]);
 	const current = $derived(session[index]);
 	const answered = $derived(Object.keys(answers).length);
 	const score = $derived(rows.filter((row) => row.isCorrect).length);
-	const areaOptions = $derived([
-		...AREAS,
-		...Array.from(new Set(questions.map(areaOf).filter((area) => !AREAS.includes(area))))
-	]);
+	const areaOptions = $derived(Array.from(new Set(questions.map(areaOf))));
 	const areaStats = $derived(stats('area'));
 	const subareaStats = $derived(stats('subarea'));
 
 	$effect(() => {
+		const nextAreaKey = areaOptions.join('\u0000');
+
+		if (nextAreaKey !== knownAreaKey) {
+			const previousAreas = knownAreaKey ? knownAreaKey.split('\u0000') : [];
+			const keptAreas = selectedAreas.filter((area) => areaOptions.includes(area));
+			const newAreas = knownAreaKey
+				? areaOptions.filter((area) => !previousAreas.includes(area))
+				: areaOptions;
+
+			selectedAreas = [...keptAreas, ...newAreas];
+			knownAreaKey = nextAreaKey;
+		}
+
 		if (questions.length === 0 && quizState !== 'idle') reset();
 	});
 
@@ -180,20 +191,24 @@
 		<div>
 			<div class="mb-2 text-sm font-bold">Areas incluidas</div>
 			<div class="flex flex-wrap gap-2">
-				{#each areaOptions as area (area)}
-					<label class="rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm">
-						<input
-							class="mr-1 rounded border-gray-300"
-							type="checkbox"
-							checked={selectedAreas.includes(area)}
-							onchange={() =>
-								(selectedAreas = selectedAreas.includes(area)
-									? selectedAreas.filter((item) => item !== area)
-									: [...selectedAreas, area])}
-						/>
-						{area}
-					</label>
-				{/each}
+				{#if areaOptions.length}
+					{#each areaOptions as area (area)}
+						<label class="rounded-full bg-gray-100 px-3 py-1 text-sm shadow-sm">
+							<input
+								class="mr-1 rounded border-gray-300"
+								type="checkbox"
+								checked={selectedAreas.includes(area)}
+								onchange={() =>
+									(selectedAreas = selectedAreas.includes(area)
+										? selectedAreas.filter((item) => item !== area)
+										: [...selectedAreas, area])}
+							/>
+							{area}
+						</label>
+					{/each}
+				{:else}
+					<span class="text-sm text-gray-600">Sin areas en el banco.</span>
+				{/if}
 			</div>
 			<label class="mt-3 block text-sm">
 				<input
