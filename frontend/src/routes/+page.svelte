@@ -208,5 +208,7 @@
 			clearQuestions={clearQuestionBank}
 			clearForest={clearKnowledgeForest}
 		/>
+
+		<QuizPanel {questions} />
 	</div>
 </main>
