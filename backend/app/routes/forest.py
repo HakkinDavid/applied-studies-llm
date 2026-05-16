@@ -4,10 +4,15 @@ from app.models.schemas import KnowledgeForestResponse
 from app.services.cleanup import cleanup_orphans
 from app.services.deletion import delete_leaf_by_id, delete_node_by_id, delete_tree_by_id
 from app.services.storage import load_knowledge_forest, save_knowledge_forest
-
+from app.core.config import FRONTEND_COMPATIBLE_AREAS
 
 router = APIRouter()
-
+@router.get("/api/areas")
+def get_available_areas():
+    return {
+        "total": len(FRONTEND_COMPATIBLE_AREAS),
+        "areas": FRONTEND_COMPATIBLE_AREAS,
+    }
 
 @router.get("/api/knowledge-forest", response_model=KnowledgeForestResponse)
 def get_knowledge_forest():
