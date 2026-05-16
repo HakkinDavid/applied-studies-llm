@@ -183,6 +183,8 @@
 			fail(problem);
 		}
 	}
+
+    // la neta la neta el ts está bien chafa pero pues más chafa es volverse loquito buscando quién es [object Object] (no soy yo)
 </script>
 
 <svelte:head><title>Applied Studies LLM</title></svelte:head>
@@ -244,4 +246,14 @@
 		<ForestPanel trees={forestTrees} />
         <!--profe profe esta ahi??-->
 	</div>
+
+    <footer class="mt-4 text-center text-xs text-gray-500">
+        Inspirado por mi proyecto:
+        <a
+            href="https://hakkindavid.github.io/CETYS/egel_prueba.html"
+            class="text-blue-600 hover:underline"
+        >
+            hakkindavid.github.io/CETYS/egel_prueba.html
+        </a>
+    </footer>
 </main>
