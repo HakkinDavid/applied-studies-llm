@@ -268,7 +268,9 @@
 					class="group relative inline-flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 bg-yellow-50 text-xs"
 					title="Referencia"
 				>
-					ℹ️
+                <!-- aja un alt atributo pero pues es i-->
+					<!-- svelte-ignore a11y_missing_attribute -->
+					<img src="i.png">
 					<span
 						class="pointer-events-none absolute top-7 right-0 z-10 hidden w-80 rounded bg-gray-900 px-3 py-2 text-left text-xs leading-snug text-white shadow-lg group-hover:block"
 					>
