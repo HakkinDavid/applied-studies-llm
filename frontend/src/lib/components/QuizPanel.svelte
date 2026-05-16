@@ -216,7 +216,7 @@
 					type="checkbox"
 					bind:checked={includeSynthetic}
 				/>
-				Incluir preguntas generadas por IA
+				Incluir preguntas generadas por IA <!-- me voy dando cuenta que este vestigio de mi implementación para el egel no tiene motivo de ser aquí pero lo dejaremos por si luego hacemos listas curadas -->
 			</label>
 		</div>
 
