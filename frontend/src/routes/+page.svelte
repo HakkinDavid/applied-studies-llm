@@ -171,7 +171,8 @@
     async function deleteMaterial(id: string) {
 		if (!confirm('¿En serio?')) return;
 		try {
-			await api(`/api/question-bank/by-material/${id}`, { method: 'DELETE' });
+			await api(`/api/materials/${id}`, { method: 'DELETE' });
+            refreshAll();
 			notice = 'Material borrado.';
 		} catch (problem) {
 			fail(problem);
