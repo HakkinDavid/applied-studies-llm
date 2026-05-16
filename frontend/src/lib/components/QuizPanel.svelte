@@ -328,11 +328,11 @@
 				<thead>
 					<tr class="border-b bg-gray-100">
 						<th class="p-2">#</th>
-						<th class="p-2">Area</th>
-						<th class="p-2">Subarea</th>
+						<th class="p-2">Área</th>
+						<th class="p-2">Subárea</th>
 						<th class="p-2">Origen</th>
 						<th class="p-2">Pregunta</th>
-						<th class="p-2">Tu respuesta</th>
+						<th class="p-2">Respuesta</th>
 						<th class="p-2">Correcta</th>
 					</tr>
 				</thead>
