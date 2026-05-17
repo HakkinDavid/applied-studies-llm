@@ -1,0 +1,10 @@
+DOCUMENTACIÓN DE app/services/rag.py
+
+Agrega búsqueda tipo RAG sobre un material subido.
+
+Usa un vector store local sencillo:
+- Convierte la pregunta y los fragmentos del documento en vectores de términos.
+- Calcula similitud coseno.
+- Combina esa similitud con coincidencia de palabras clave.
+
+No depende de embeddings externos, así no rompe compatibilidad con distintos proveedores de IA.

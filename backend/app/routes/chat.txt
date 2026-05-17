@@ -1,0 +1,9 @@
+DOCUMENTACIÓN DE app/routes/chat.py
+
+Endpoints nuevos:
+
+POST /api/materials/{material_id}/ask
+Permite hacer preguntas directas sobre un material.
+
+GET /api/conversations/{conversation_id}
+Devuelve el historial de una conversación.

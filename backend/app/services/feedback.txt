@@ -1,0 +1,9 @@
+DOCUMENTACIÓN DE app/services/feedback.py
+
+Analiza resultados de examen y genera retroalimentación posterior.
+
+Agrupa errores por:
+- area
+- leaf_name/subarea
+
+Si detecta bajo desempeño o errores repetidos, genera consejos concretos.

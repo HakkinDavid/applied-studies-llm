@@ -1,0 +1,10 @@
+DOCUMENTACIÓN DE app/services/chat.py
+
+Permite hacer preguntas directas al LLM sobre un material específico.
+
+Flujo:
+1. Recibe material_id y pregunta.
+2. Busca fragmentos relevantes con rag.py.
+3. Agrega historial reciente de conversación.
+4. Llama al LLM.
+5. Guarda la conversación en storage/conversations.

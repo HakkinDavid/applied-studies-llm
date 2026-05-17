@@ -1,0 +1,18 @@
+DOCUMENTACIÓN DE app/routes/feedback.py
+
+POST /api/exam/feedback
+
+Recibe:
+{
+  "questions": [...],
+  "answers": {
+    "question_id_o_indice": respuesta
+  }
+}
+
+Devuelve:
+- score
+- estadísticas por área
+- estadísticas por tema
+- preguntas incorrectas
+- recomendaciones generadas por IA
