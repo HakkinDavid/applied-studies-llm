@@ -30,11 +30,13 @@ class CreateConversationResponse(BaseModel):
 class AskMaterialRequest(BaseModel):
     question: str
     top_k: int = 5
+    conversation_top_k: int = 6
 
 
 class ConversationMessageRequest(BaseModel):
     question: str
     top_k: int = 5
+    conversation_top_k: int = 6
 
 
 class AskMaterialResponse(BaseModel):
@@ -47,6 +49,7 @@ class AskMaterialResponse(BaseModel):
     suggested_follow_up: Any = None
     used_references: list[Any] = []
     retrieved_references: list[dict[str, Any]] = []
+    retrieved_conversation_messages: list[dict[str, Any]] = []
 
 
 @router.post(
@@ -76,6 +79,7 @@ def ask_material(material_id: str, payload: AskMaterialRequest):
         material_id=material_id,
         question=payload.question,
         top_k=payload.top_k,
+        conversation_top_k=payload.conversation_top_k,
     )
 
 
@@ -91,6 +95,7 @@ def post_conversation_message(
         conversation_id=conversation_id,
         question=payload.question,
         top_k=payload.top_k,
+        conversation_top_k=payload.conversation_top_k,
     )
 
 

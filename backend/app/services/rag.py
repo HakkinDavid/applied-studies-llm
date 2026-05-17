@@ -94,7 +94,6 @@ def load_references_or_fallback(material_id: str) -> list[dict[str, Any]]:
         )
 
     text = text_path.read_text(encoding="utf-8")
-
     references = split_text_into_references(text)
 
     if not references:
@@ -104,6 +103,17 @@ def load_references_or_fallback(material_id: str) -> list[dict[str, Any]]:
         )
 
     return references
+
+
+def score_text(query: str, text: str) -> float:
+    query_vector = build_vector(query)
+    text_vector = build_vector(text)
+    query_tokens = set(tokenize(query))
+
+    vector_score = cosine_similarity(query_vector, text_vector)
+    keyword_score = keyword_overlap_score(query_tokens, text)
+
+    return (0.70 * vector_score) + (0.30 * keyword_score)
 
 
 def retrieve_relevant_references(
@@ -120,17 +130,11 @@ def retrieve_relevant_references(
         )
 
     references = load_references_or_fallback(material_id)
-
-    query_vector = build_vector(query)
-    query_tokens = set(tokenize(query))
-
     scored = []
 
     for reference in references:
         text = str(reference.get("text") or reference.get("excerpt") or "")
-        vector_score = cosine_similarity(query_vector, build_vector(text))
-        keyword_score = keyword_overlap_score(query_tokens, text)
-        final_score = (0.70 * vector_score) + (0.30 * keyword_score)
+        final_score = score_text(query, text)
 
         scored.append(
             {
@@ -152,15 +156,72 @@ def retrieve_relevant_references(
     return selected
 
 
+def retrieve_relevant_conversation_messages(
+    conversation: dict[str, Any],
+    query: str,
+    top_k: int = 6,
+) -> list[dict[str, Any]]:
+    messages = conversation.get("messages", [])
+
+    scored = []
+
+    for index, message in enumerate(messages):
+        role = message.get("role")
+        content = str(message.get("content") or "").strip()
+
+        if role not in ["user", "assistant"]:
+            continue
+
+        if not content:
+            continue
+
+        final_score = score_text(query, content)
+
+        scored.append(
+            {
+                "message_index": index,
+                "role": role,
+                "content": content,
+                "created_at": message.get("created_at"),
+                "score": round(final_score, 6),
+            }
+        )
+
+    scored.sort(key=lambda item: item["score"], reverse=True)
+
+    selected = [item for item in scored[:top_k] if item["score"] > 0]
+
+    if not selected:
+        selected = scored[-top_k:]
+
+    selected.sort(key=lambda item: item["message_index"])
+
+    return selected
+
+
 def build_context_from_references(references: list[dict[str, Any]]) -> str:
     lines = []
 
     for reference in references:
         page = reference.get("page")
         page_text = f"página {page}" if page else "sin página"
+
         lines.append(
             f"[{reference.get('ref_id')}] ({page_text}) {reference.get('text')}"
         )
+
+    return "\n\n".join(lines)
+
+
+def build_context_from_conversation_messages(messages: list[dict[str, Any]]) -> str:
+    lines = []
+
+    for message in messages:
+        role = message.get("role", "unknown")
+        content = message.get("content", "")
+        index = message.get("message_index")
+
+        lines.append(f"[mensaje {index} - {role}] {content}")
 
     return "\n\n".join(lines)
 
@@ -174,4 +235,17 @@ def summarize_retrieval(references: list[dict[str, Any]]) -> list[dict[str, Any]
             "score": reference.get("score"),
         }
         for reference in references
+    ]
+
+
+def summarize_conversation_retrieval(messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        {
+            "message_index": message.get("message_index"),
+            "role": message.get("role"),
+            "content": make_excerpt(message.get("content", "")),
+            "created_at": message.get("created_at"),
+            "score": message.get("score"),
+        }
+        for message in messages
     ]

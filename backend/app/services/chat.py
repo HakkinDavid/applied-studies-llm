@@ -7,8 +7,11 @@ from fastapi import HTTPException
 from app.core.paths import STORAGE_DIR
 from app.services.ai import call_ai_text
 from app.services.rag import (
+    build_context_from_conversation_messages,
     build_context_from_references,
+    retrieve_relevant_conversation_messages,
     retrieve_relevant_references,
+    summarize_conversation_retrieval,
     summarize_retrieval,
 )
 from app.services.storage import load_index, load_json, save_json
@@ -108,23 +111,11 @@ def append_message(
     )
 
 
-def get_recent_conversation_text(conversation: dict[str, Any], limit: int = 8) -> str:
-    messages = conversation.get("messages", [])[-limit:]
-    lines = []
-
-    for message in messages:
-        role = message.get("role", "unknown")
-        content = message.get("content", "")
-        lines.append(f"{role}: {content}")
-
-    return "\n".join(lines)
-
-
 def build_material_question_prompt(
     material_name: str,
     user_question: str,
-    context: str,
-    conversation_text: str,
+    material_context: str,
+    conversation_context: str,
 ) -> str:
     return f"""
 Responde la pregunta del usuario usando principalmente el material de estudio proporcionado.
@@ -132,22 +123,22 @@ Responde la pregunta del usuario usando principalmente el material de estudio pr
 Material:
 {material_name}
 
-Historial reciente de conversación:
-{conversation_text if conversation_text else "No hay historial previo."}
-
 Fragmentos relevantes del material:
-{context}
+{material_context}
 
-Pregunta del usuario:
+Fragmentos relevantes de la conversación previa:
+{conversation_context if conversation_context else "No hay conversación previa relevante."}
+
+Pregunta actual del usuario:
 {user_question}
 
 Reglas:
 - Responde en español.
 - Usa el material como fuente principal.
+- Usa los fragmentos de conversación solo para entender continuidad, referencias como "eso", "lo anterior" o preguntas de seguimiento.
 - Si el material no contiene suficiente información, dilo claramente.
 - No inventes datos fuera del material.
 - Si puedes, menciona de forma natural la página o referencia usada.
-- Mantén continuidad con el historial si el usuario pregunta "eso", "lo anterior", "dame otro ejemplo", etc.
 - Responde preferentemente en JSON válido con el formato indicado.
 - Si por alguna razón no puedes responder en JSON, responde texto normal.
 
@@ -200,6 +191,7 @@ def answer_question_in_conversation(
     conversation: dict[str, Any],
     question: str,
     top_k: int = 5,
+    conversation_top_k: int = 6,
 ) -> dict[str, Any]:
     material_id = conversation.get("material_id")
 
@@ -224,24 +216,36 @@ def answer_question_in_conversation(
             detail="top_k debe estar entre 1 y 12.",
         )
 
-    references = retrieve_relevant_references(
+    if conversation_top_k < 0 or conversation_top_k > 20:
+        raise HTTPException(
+            status_code=400,
+            detail="conversation_top_k debe estar entre 0 y 20.",
+        )
+
+    material_references = retrieve_relevant_references(
         material_id=material_id,
         query=question,
         top_k=top_k,
     )
 
-    context = build_context_from_references(references)
-    conversation_text = get_recent_conversation_text(conversation)
+    conversation_messages = retrieve_relevant_conversation_messages(
+        conversation=conversation,
+        query=question,
+        top_k=conversation_top_k,
+    )
+
+    material_context = build_context_from_references(material_references)
+    conversation_context = build_context_from_conversation_messages(conversation_messages)
 
     prompt = build_material_question_prompt(
         material_name=material_name,
         user_question=question,
-        context=context,
-        conversation_text=conversation_text,
+        material_context=material_context,
+        conversation_context=conversation_context,
     )
 
     content = call_ai_text(
-        system_message="Eres un tutor académico que responde preguntas usando material de estudio y referencias documentales.",
+        system_message="Eres un tutor académico que responde preguntas usando material de estudio y contexto conversacional recuperado por RAG.",
         user_message=prompt,
         temperature=0.3,
     )
@@ -249,7 +253,8 @@ def answer_question_in_conversation(
     parsed = parse_chat_model_response(content)
     answer = parsed["answer"]
 
-    retrieved_references = summarize_retrieval(references)
+    retrieved_references = summarize_retrieval(material_references)
+    retrieved_conversation_messages = summarize_conversation_retrieval(conversation_messages)
 
     append_message(
         conversation,
@@ -258,6 +263,7 @@ def answer_question_in_conversation(
         metadata={
             "material_id": material_id,
             "top_k": top_k,
+            "conversation_top_k": conversation_top_k,
         },
     )
 
@@ -271,6 +277,7 @@ def answer_question_in_conversation(
             "suggested_follow_up": parsed.get("suggested_follow_up"),
             "used_references": parsed.get("used_references", []),
             "retrieved_references": retrieved_references,
+            "retrieved_conversation_messages": retrieved_conversation_messages,
         },
     )
 
@@ -286,6 +293,7 @@ def answer_question_in_conversation(
         "suggested_follow_up": parsed.get("suggested_follow_up"),
         "used_references": parsed.get("used_references", []),
         "retrieved_references": retrieved_references,
+        "retrieved_conversation_messages": retrieved_conversation_messages,
     }
 
 
@@ -293,6 +301,7 @@ def ask_material_once(
     material_id: str,
     question: str,
     top_k: int = 5,
+    conversation_top_k: int = 6,
 ) -> dict[str, Any]:
     created = create_material_conversation(material_id)
     conversation = load_conversation(created["conversation_id"])
@@ -301,6 +310,7 @@ def ask_material_once(
         conversation=conversation,
         question=question,
         top_k=top_k,
+        conversation_top_k=conversation_top_k,
     )
 
 
@@ -308,6 +318,7 @@ def post_message_to_conversation(
     conversation_id: str,
     question: str,
     top_k: int = 5,
+    conversation_top_k: int = 6,
 ) -> dict[str, Any]:
     conversation = load_conversation(conversation_id)
 
@@ -315,6 +326,7 @@ def post_message_to_conversation(
         conversation=conversation,
         question=question,
         top_k=top_k,
+        conversation_top_k=conversation_top_k,
     )
 
 
