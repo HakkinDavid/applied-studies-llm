@@ -13,6 +13,6 @@ def health():
         "status": "ok",
         "message": "Backend funcionando correctamente.",
         "ai_configured": is_ai_configured(),
-        "base_url": OPENAI_BASE_URL,
+        # "base_url": OPENAI_BASE_URL, # pasado de lanza rafa, como q exponiendo nuestros datos sensibles
         "model": MODEL,
     }

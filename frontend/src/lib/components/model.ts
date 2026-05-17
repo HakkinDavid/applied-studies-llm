@@ -2,7 +2,6 @@ export type HealthResponse = {
 	status: string;
 	message: string;
 	ai_configured: boolean;
-	base_url: string;
 	model: string;
 };
 
