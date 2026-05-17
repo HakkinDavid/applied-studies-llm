@@ -5,6 +5,26 @@ export type HealthResponse = {
 	model: string;
 };
 
+export type ConversationSummary = {
+    conversation_id: string;
+    title: string;
+    material_id?: string;
+    material_name?: string;
+};
+
+export type ConversationMessage = {
+    role: 'user' | 'assistant';
+    content: string;
+};
+
+export type ConversationResponse = {
+    conversation_id: string;
+    material_id: string;
+    material_name: string;
+    question: string;
+    answer: string;
+};
+
 export type Material = {
 	id: string;
 	sha256: string;
