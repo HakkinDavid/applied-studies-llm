@@ -43,29 +43,93 @@ def ensure_ai_client() -> None:
         )
 
 
-def call_ai_text(system_message: str, user_message: str, temperature: float = 0.3) -> str:
+def model_error_mentions_temperature(error: Exception) -> bool:
+    message = str(error).lower()
+
+    return (
+        "temperature" in message
+        and (
+            "unsupported" in message
+            or "does not support" in message
+            or "unsupported value" in message
+        )
+    )
+
+
+def create_chat_completion_without_temperature(
+    system_message: str,
+    user_message: str,
+):
+    return client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {
+                "role": "system",
+                "content": system_message,
+            },
+            {
+                "role": "user",
+                "content": user_message,
+            },
+        ],
+    )
+
+
+def create_chat_completion_with_temperature(
+    system_message: str,
+    user_message: str,
+    temperature: float,
+):
+    return client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {
+                "role": "system",
+                "content": system_message,
+            },
+            {
+                "role": "user",
+                "content": user_message,
+            },
+        ],
+        temperature=temperature,
+    )
+
+
+def call_ai_text(system_message: str, user_message: str, temperature: float | None = None) -> str:
     ensure_ai_client()
 
     try:
-        response = client.chat.completions.create(
-            model=MODEL,
-            messages=[
-                {
-                    "role": "system",
-                    "content": system_message,
-                },
-                {
-                    "role": "user",
-                    "content": user_message,
-                },
-            ],
-            temperature=temperature,
-        )
+        if temperature is None:
+            response = create_chat_completion_without_temperature(
+                system_message=system_message,
+                user_message=user_message,
+            )
+        else:
+            response = create_chat_completion_with_temperature(
+                system_message=system_message,
+                user_message=user_message,
+                temperature=temperature,
+            )
+
     except Exception as error:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error al comunicarse con el servicio de IA usando la librería de OpenAI: {error}",
-        )
+        if temperature is not None and model_error_mentions_temperature(error):
+            try:
+                response = create_chat_completion_without_temperature(
+                    system_message=system_message,
+                    user_message=user_message,
+                )
+            except Exception as retry_error:
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Error al comunicarse con el servicio de IA usando la librería de OpenAI: {retry_error}",
+                )
+
+        else:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Error al comunicarse con el servicio de IA usando la librería de OpenAI: {error}",
+            )
 
     content = response.choices[0].message.content
 
@@ -78,7 +142,7 @@ def call_ai_text(system_message: str, user_message: str, temperature: float = 0.
     return content
 
 
-def call_ai_json(system_message: str, user_message: str, temperature: float = 0.3) -> Any:
+def call_ai_json(system_message: str, user_message: str, temperature: float | None = None) -> Any:
     content = call_ai_text(
         system_message=system_message,
         user_message=user_message,
