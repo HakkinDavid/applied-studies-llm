@@ -18,6 +18,7 @@
 		type UploadInput
 	} from '$lib/components/model';
 	import Button from '$lib/components/Button.svelte';
+	import ChatPanel from '$lib/components/ChatPanel.svelte';
 
 	let apiBase = $state('');
 	let health = $state<HealthResponse | null>(null);
@@ -27,7 +28,6 @@
 	let questions = $state<Question[]>([]);
 	let forest = $state<KnowledgeForest | null>(null);
 	let loadingAll = $state(false);
-	let loadingReferences = $state(false);
 	let uploading = $state(false);
 	let error = $state('');
 	let notice = $state('');
@@ -102,7 +102,6 @@
 	}
 
 	async function loadReferences(id: string) {
-		loadingReferences = true;
 		selectedMaterialId = id;
 		try {
 			references = (await api<MaterialReferencesResponse>(`/api/materials/${id}/references`))
@@ -111,7 +110,6 @@
 			references = [];
 			fail(problem);
 		}
-		loadingReferences = false;
 	}
 
 	async function uploadMaterial({ file, treeHint, numQuestions }: UploadInput) {
@@ -137,9 +135,7 @@
 					(data) => (questions = data.questions.map(normalizeQuestion))
 				),
 				refreshMaterials(),
-				api<KnowledgeForestResponse>('/api/knowledge-forest').then(
-					(data) => (forest = data.forest)
-				)
+				api<KnowledgeForestResponse>('/api/knowledge-forest').then((data) => (forest = data.forest))
 			]);
 		} catch (problem) {
 			fail(problem);
@@ -147,18 +143,18 @@
 		uploading = false;
 	}
 
-    async function deleteMaterial(id: string) {
+	async function deleteMaterial(id: string) {
 		if (!confirm('¿En serio?')) return;
 		try {
 			await api(`/api/materials/${id}`, { method: 'DELETE' });
-            refreshAll();
+			refreshAll();
 			notice = 'Material borrado.';
 		} catch (problem) {
 			fail(problem);
 		}
 	}
 
-    // la neta la neta el ts está bien chafa pero pues más chafa es volverse loquito buscando quién es [object Object] (no soy yo)
+	// la neta la neta el ts está bien chafa pero pues más chafa es volverse loquito buscando quién es [object Object] (no soy yo)
 </script>
 
 <svelte:head><title>Applied Studies LLM</title></svelte:head>
@@ -168,14 +164,11 @@
 		<header
 			class="mb-4 flex flex-col gap-3 border-b border-gray-300 pb-4 md:flex-col md:items-center md:justify-between"
 		>
-			<div class="w-full flex flex-grow justify-center items-center gap-3">
-                <img class="w-12 h-12 inline" src="https://bonsanbec.dev/favicon.svg" alt="favicon">
-				<p class="text-xl text-black italic font-bold">Applied Studies LLM</p>
+			<div class="flex w-full flex-grow items-center justify-center gap-3">
+				<img class="inline h-12 w-12" src="https://bonsanbec.dev/favicon.svg" alt="favicon" />
+				<p class="text-xl font-bold text-black italic">Applied Studies LLM</p>
 			</div>
-			<Button
-				onclick={refreshAll}
-				disabled={loadingAll}
-			>
+			<Button onclick={refreshAll} disabled={loadingAll}>
 				{loadingAll ? 'Actualizando...' : 'Actualizar'}
 			</Button>
 		</header>
@@ -209,26 +202,26 @@
 			{selectedMaterial}
 			{selectedMaterialId}
 			{references}
-			{loadingReferences}
 			{loadReferences}
-            {deleteMaterial}
+			{deleteMaterial}
 		/>
+		<ChatPanel apiBaseUrl={apiBase} {selectedMaterialId} {selectedMaterial} {materials} {loadReferences} />
 		<!--jugaremos en el bosque mientras el mtro. ortega no está, porque si de pronto aparece los comentarios nos leerá-->
 		<ForestPanel trees={forestTrees} />
-        <!--profe profe esta ahi??-->
+		<!--profe profe esta ahi??-->
 	</div>
 
-    <footer class="mt-4 text-center text-xs text-gray-500">
-        © Bonsanbec Developers {new Date().getFullYear()}
-        <br>
-        Desarrollado por David Emmanuel Santana Romero y Rafael Negrete Leyva
-        <br>
-        Inspirado por el proyecto:
-        <a
-            href="https://hakkindavid.github.io/CETYS/egel_prueba.html"
-            class="text-blue-600 hover:underline"
-        >
-            hakkindavid.github.io/CETYS/egel_prueba.html
-        </a>
-    </footer>
+	<footer class="mt-4 text-center text-xs text-gray-500">
+		© Bonsanbec Developers {new Date().getFullYear()}
+		<br />
+		Desarrollado por David Emmanuel Santana Romero y Rafael Negrete Leyva
+		<br />
+		Inspirado por el proyecto:
+		<a
+			href="https://hakkindavid.github.io/CETYS/egel_prueba.html"
+			class="text-blue-600 hover:underline"
+		>
+			hakkindavid.github.io/CETYS/egel_prueba.html
+		</a>
+	</footer>
 </main>
