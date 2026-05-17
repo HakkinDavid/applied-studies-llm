@@ -17,6 +17,7 @@
 		type QuestionBankResponse,
 		type UploadInput
 	} from '$lib/components/model';
+	import Button from '$lib/components/Button.svelte';
 
 	let apiBase = $state('');
 	let health = $state<HealthResponse | null>(null);
@@ -165,20 +166,18 @@
 <main class="min-h-screen bg-gray-100 px-4 py-5 text-gray-900">
 	<div class="mx-auto max-w-6xl">
 		<header
-			class="mb-4 flex flex-col gap-3 border-b border-gray-300 pb-4 md:flex-row md:items-center md:justify-between"
+			class="mb-4 flex flex-col gap-3 border-b border-gray-300 pb-4 md:flex-col md:items-center md:justify-between"
 		>
-			<div class="flex flex-grow justify-center items-center gap-3">
+			<div class="w-full flex flex-grow justify-center items-center gap-3">
                 <img class="w-12 h-12 inline" src="https://bonsanbec.dev/favicon.svg" alt="favicon">
 				<p class="text-xl text-black italic font-bold">Applied Studies LLM</p>
 			</div>
-			<button
-				type="button"
-				class="rounded border border-gray-400 bg-white px-3 py-2 text-sm hover:bg-gray-100"
+			<Button
 				onclick={refreshAll}
 				disabled={loadingAll}
 			>
 				{loadingAll ? 'Actualizando...' : 'Actualizar'}
-			</button>
+			</Button>
 		</header>
 
 		{#if error}<div
