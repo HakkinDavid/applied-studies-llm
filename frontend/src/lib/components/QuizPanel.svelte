@@ -193,7 +193,7 @@
 		</label>
 
 		<div>
-			<div class="mb-2 text-sm font-bold">Areas incluidas</div>
+			<div class="mb-2 text-sm font-bold">Áreas a estudiar</div>
 			<div class="flex flex-wrap gap-2">
 				{#if areaOptions.length}
 					{#each areaOptions as area (area)}
@@ -211,7 +211,7 @@
 						</label>
 					{/each}
 				{:else}
-					<span class="text-sm text-gray-600">Sin areas en el banco.</span>
+					<span class="text-sm text-gray-600">Sin áreas en el banco.</span>
 				{/if}
 			</div>
 			<label class="mt-3 block text-sm">
