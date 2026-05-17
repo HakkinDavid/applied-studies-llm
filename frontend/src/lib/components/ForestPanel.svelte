@@ -7,7 +7,7 @@
 <section class="mt-4 rounded-lg bg-white p-4 shadow-sm">
 	<h2 class="mb-3 text-lg font-bold">Bosque de conocimiento ({trees.length})</h2>
 	{#if trees.length === 0}
-		<p class="text-sm text-gray-700">Sin arboles registrados.</p>
+		<p class="text-sm text-gray-700">Sin árboles registrados.</p>
 	{:else}
 		<div class="grid gap-3 md:grid-cols-2">
 			{#each trees as tree (tree.id)}
