@@ -1,9 +1,29 @@
 DOCUMENTACIÓN DE app/routes/chat.py
 
-Endpoints nuevos:
+Endpoints de conversación sobre materiales.
+
+POST /api/materials/{material_id}/conversations
+Crea una conversación nueva para un material.
+
+Body opcional:
+{
+  "title": "Mi conversación"
+}
+
+GET /api/materials/{material_id}/conversations
+Lista conversaciones asociadas a un material.
 
 POST /api/materials/{material_id}/ask
-Permite hacer preguntas directas sobre un material.
+Endpoint rápido para preguntar sobre un material.
+Si no mandas conversation_id, crea una conversación nueva.
+Si mandas conversation_id, continúa esa conversación.
+
+POST /api/conversations/{conversation_id}/messages
+Envía una pregunta a una conversación ya existente.
+Aquí ya no necesitas mandar material_id porque la conversación lo tiene guardado.
+
+GET /api/conversations
+Lista todas las conversaciones.
 
 GET /api/conversations/{conversation_id}
-Devuelve el historial de una conversación.
+Devuelve el historial completo de una conversación.

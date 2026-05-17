@@ -1,10 +1,27 @@
 DOCUMENTACIÓN DE app/services/chat.py
 
-Permite hacer preguntas directas al LLM sobre un material específico.
+Este archivo maneja conversaciones sobre materiales.
 
-Flujo:
-1. Recibe material_id y pregunta.
-2. Busca fragmentos relevantes con rag.py.
-3. Agrega historial reciente de conversación.
-4. Llama al LLM.
-5. Guarda la conversación en storage/conversations.
+Funciones principales:
+
+create_material_conversation(material_id, title):
+Crea una conversación nueva asociada a un material.
+
+ask_material_question(material_id, question, conversation_id, top_k):
+Endpoint rápido. Si no recibe conversation_id, crea una conversación.
+Si recibe conversation_id, continúa esa conversación.
+
+post_message_to_conversation(conversation_id, question, top_k):
+Agrega una pregunta a una conversación ya existente. La conversación ya sabe a qué material pertenece.
+
+load_conversation(conversation_id):
+Carga una conversación guardada en storage/conversations.
+
+list_conversations():
+Lista todas las conversaciones guardadas.
+
+list_material_conversations(material_id):
+Lista conversaciones asociadas a un material específico.
+
+Dónde guarda:
+storage/conversations/{conversation_id}.json
