@@ -53,9 +53,7 @@
 						{health?.status ?? 'sin conexion'}
 					</span>
 				</div>
-				<div><strong>IA:</strong> {health?.ai_configured ? 'configurada' : 'sin configurar'}</div>
 				<div><strong>Modelo:</strong> {health?.model || 'n/a'}</div>
-				<div><strong>Preguntas JSON:</strong> {questionsCount}</div>
 			</div>
 		</div>
 
