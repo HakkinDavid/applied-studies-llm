@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from './Button.svelte';
 	import { formatBytes, formatDate, pageLabel } from './model';
 	import type { Material, MaterialReference } from './model';
 
@@ -29,40 +30,39 @@
 		{:else}
 			<div class="max-h-[420px] space-y-3 overflow-auto">
 				{#each materials as material (material.id)}
-					<button
-						type="button"
-						class={`block w-full rounded border p-3 text-left text-sm hover:bg-gray-50 ${
+					<Button
+						classes={`block w-full p-3 text-left hover:bg-gray-50 ${
 							material.id === selectedMaterialId ? 'border-gray-900' : 'border-gray-200'
 						}`}
 						onclick={() => void loadReferences(material.id)}
 					>
-						<div class="flex flex-wrap items-center justify-between gap-2">
-							<strong>{material.original_filename}</strong>
-							<span>{material.generated_questions} preguntas</span>
-						</div>
-						<div class="mt-1 text-gray-600">
-							{formatBytes(material.size_bytes)} : {material.reference_count} referencias del {formatDate(
-								material.uploaded_at
-							)}
-						</div>
-						{#if material.knowledge_path}<div class="mt-1 text-gray-700">
-								{material.knowledge_path}
-							</div>{/if}
-						{#if material.duplicate}<div class="mt-1 text-yellow-700">
-								Duplicado SHA-256 reutilizado.
-							</div>{/if}
-						<div class="mt-4">
-							<!-- svelte-ignore a11y_click_events_have_key_events -->
-							<!-- svelte-ignore a11y_no_static_element_interactions -->
-							<!-- svelte-ignore a11y_missing_attribute -->
-							<a
-								class="rounded border border-red-300 px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-								onclick={() => void deleteMaterial(material.id)}
-							>
-								Borrar material
-							</a>
-						</div>
-					</button>
+							<div class="flex flex-wrap items-center justify-between gap-2">
+								<strong>{material.original_filename}</strong>
+								<span>{material.generated_questions} preguntas</span>
+							</div>
+							<div class="mt-1 text-gray-600">
+								{formatBytes(material.size_bytes)} : {material.reference_count} referencias del {formatDate(
+									material.uploaded_at
+								)}
+							</div>
+							{#if material.knowledge_path}<div class="mt-1 text-gray-700">
+									{material.knowledge_path}
+								</div>{/if}
+							{#if material.duplicate}<div class="mt-1 text-yellow-700">
+									Duplicado SHA-256 reutilizado.
+								</div>{/if}
+							<div class="mt-4">
+								<!-- svelte-ignore a11y_click_events_have_key_events -->
+								<!-- svelte-ignore a11y_no_static_element_interactions -->
+								<!-- svelte-ignore a11y_missing_attribute -->
+								<a
+									class="rounded border border-red-300 px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+									onclick={() => void deleteMaterial(material.id)}
+								>
+									Borrar material
+								</a>
+							</div>
+					</Button>
 				{/each}
 			</div>
 		{/if}
