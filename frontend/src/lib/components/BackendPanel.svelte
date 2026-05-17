@@ -87,7 +87,7 @@
 				</label>
 			</div>
 			<label class="mt-3 block text-sm font-bold">
-				Pista de arbol
+				Pista de árbol
 				<input
 					class="mt-1 block w-full rounded border-gray-300 text-sm"
 					type="text"
