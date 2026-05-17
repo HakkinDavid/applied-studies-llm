@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from './Button.svelte';
 	import type { HealthResponse, UploadInput } from './model';
 
 	let {
@@ -9,7 +10,7 @@
 		uploading,
 		setApiBase,
 		refresh,
-		upload,
+		upload
 	}: {
 		apiBase: string;
 		health: HealthResponse | null;
@@ -40,14 +41,9 @@
 					value={apiBase ?? ''}
 					oninput={(event) => setApiBase(event.currentTarget.value ?? '')}
 				/>
-				<button
-					type="button"
-					class="rounded border border-gray-400 px-3 py-2 text-sm hover:bg-gray-100"
-					onclick={() => void refresh()}
-					disabled={loading}
-				>
-					Probar
-				</button>
+				<Button onclick={() => void refresh()} disabled={loading}>
+						Probar
+				</Button>
 			</div>
 
 			<div class="mt-3 grid gap-2 text-sm sm:grid-cols-2">
@@ -103,13 +99,13 @@
 				/>
 			</label>
 			<div class="mt-3 flex flex-wrap gap-2">
-				<button
-					type="submit"
-					class="rounded border border-gray-700 bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800"
+				<Button
+					submit
+					classes="border-gray-700 bg-gray-900 text-white hover:bg-gray-800"
 					disabled={uploading}
 				>
-					{uploading ? 'Procesando...' : 'Subir y generar'}
-				</button>
+						{uploading ? 'Procesando...' : 'Subir y generar'}
+				</Button>
 			</div>
 		</form>
 	</div>
