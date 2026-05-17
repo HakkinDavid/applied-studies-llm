@@ -21,3 +21,6 @@ Ejecutar sistema:
 
 Probar:
     Ir a http://127.0.0.1:8000/
+
+Sistema en producción:
+    Ir a https://asllm.bonsanbec.dev/
