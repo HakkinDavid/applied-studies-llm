@@ -2,6 +2,7 @@
 	import { onDestroy } from 'svelte';
 	import { LEVELS, areaOf, formatTime, pageLabel, subareaOf } from './model';
 	import type { Question, ResultRow } from './model';
+	import Button from './Button.svelte';
 
 	let { questions }: { questions: Question[] } = $props();
 
@@ -81,9 +82,12 @@
 			selectedAreas.reduce((sum, area) => sum + (buckets[area]?.length ?? 0), 0)
 		);
 
-        if (total < level.questions) {
-			error = 'No hay suficientes preguntas para iniciar la simulación en este nivel (faltan ' + (level.questions - total) + ').';
-            reset();
+		if (total < level.questions) {
+			error =
+				'No hay suficientes preguntas para iniciar la simulación en este nivel (faltan ' +
+				(level.questions - total) +
+				').';
+			reset();
 			return;
 		}
 
@@ -220,13 +224,11 @@
 			</label>
 		</div>
 
-		<button
-			type="button"
-			class="rounded border border-gray-700 bg-white px-5 py-2 text-sm font-bold hover:bg-gray-100"
+		<Button
 			onclick={start}
 		>
-			Iniciar
-		</button>
+				Iniciar
+		</Button>
 	</div>
 </section>
 
@@ -237,25 +239,21 @@
 {/if}
 
 <div id="nav" class="mb-3 flex items-center justify-between gap-2">
-	<button
-		type="button"
-		class="rounded border border-gray-400 bg-white px-4 py-2 text-sm hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+	<Button
 		onclick={() => (index = Math.max(0, index - 1))}
 		disabled={quizState !== 'running' || index === 0}
 	>
-		Anterior
-	</button>
+			Anterior
+	</Button>
 	<div class="text-sm text-gray-700">
 		Tiempo: {formatTime(timeLeft)} con {answered}/{session.length} respondidas
 	</div>
-	<button
-		type="button"
-		class="rounded border border-gray-400 bg-white px-4 py-2 text-sm hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+	<Button
 		onclick={() => (index < session.length - 1 ? (index += 1) : finish())}
 		disabled={quizState !== 'running' || session.length === 0}
 	>
 		{index < session.length - 1 ? 'Siguiente' : 'Evaluar'}
-	</button>
+	</Button>
 </div>
 
 <section id="quiz" class="mb-4 rounded-lg bg-white p-4 shadow-sm">
@@ -268,9 +266,9 @@
 					class="group relative inline-flex h-6 w-6 items-center justify-center rounded-full border border-gray-300 bg-yellow-50 text-xs"
 					title="Referencia"
 				>
-                <!-- aja un alt atributo pero pues es i-->
+					<!-- aja un alt atributo pero pues es i-->
 					<!-- svelte-ignore a11y_missing_attribute -->
-					<img src="i.png">
+					<img src="i.png" />
 					<span
 						class="pointer-events-none absolute top-7 right-0 z-10 hidden w-80 rounded bg-gray-900 px-3 py-2 text-left text-xs leading-snug text-white shadow-lg group-hover:block"
 					>
