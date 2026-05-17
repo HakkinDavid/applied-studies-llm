@@ -8,7 +8,6 @@
 		selectedMaterial,
 		selectedMaterialId,
 		references,
-		loadingReferences,
 		loadReferences,
 		deleteMaterial
 	}: {
@@ -16,7 +15,6 @@
 		selectedMaterial: Material | null;
 		selectedMaterialId: string;
 		references: MaterialReference[];
-		loadingReferences: boolean;
 		loadReferences: (id: string) => void | Promise<void>;
 		deleteMaterial: (id: string) => void | Promise<void>;
 	} = $props();
@@ -73,9 +71,7 @@
 		{#if selectedMaterial}<p class="mb-3 text-sm text-gray-700">
 				{selectedMaterial.original_filename}
 			</p>{/if}
-		{#if loadingReferences}
-			<p class="text-sm text-gray-700">Cargando referencias...</p>
-		{:else if references.length === 0}
+		{#if references.length === 0}
 			<p class="text-sm text-gray-700">Sin referencias para mostrar.</p>
 		{:else}
 			<div class="max-h-[420px] space-y-3 overflow-auto pr-1">
