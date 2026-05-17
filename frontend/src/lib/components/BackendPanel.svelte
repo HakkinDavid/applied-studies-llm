@@ -5,7 +5,6 @@
 	let {
 		apiBase,
 		health,
-		questionsCount,
 		loading,
 		uploading,
 		setApiBase,
