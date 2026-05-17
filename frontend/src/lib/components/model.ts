@@ -121,9 +121,9 @@ export const LEVELS: StudyLevel[] = [
 ];
 
 export const areaOf = (question: Question) => question.area?.trim() || 'Otro';
-export const subareaOf = (question: Question) => question.subarea?.trim() || '-';
+export const subareaOf = (question: Question) => question.subarea?.trim() || 'n/a';
 export const pageLabel = (page: number | null | undefined) =>
-	page ? `pagina ${page}` : 'sin pagina';
+	page ? `página ${page}` : 'sin página';
 export const formatTime = (seconds: number) =>
 	`${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`;
 export const formatBytes = (bytes: number) =>
