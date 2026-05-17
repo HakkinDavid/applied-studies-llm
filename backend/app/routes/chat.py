@@ -4,7 +4,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 
 from app.services.chat import (
-    ask_material_question,
+    ask_material_once,
     create_material_conversation,
     list_conversations,
     list_material_conversations,
@@ -29,7 +29,6 @@ class CreateConversationResponse(BaseModel):
 
 class AskMaterialRequest(BaseModel):
     question: str
-    conversation_id: str | None = None
     top_k: int = 5
 
 
@@ -73,10 +72,9 @@ def get_material_conversations(material_id: str):
 
 @router.post("/api/materials/{material_id}/ask", response_model=AskMaterialResponse)
 def ask_material(material_id: str, payload: AskMaterialRequest):
-    return ask_material_question(
+    return ask_material_once(
         material_id=material_id,
         question=payload.question,
-        conversation_id=payload.conversation_id,
         top_k=payload.top_k,
     )
 
