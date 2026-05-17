@@ -76,7 +76,7 @@
 				<label class="block text-sm font-bold">
 					Archivo
 					<input
-						class="mt-1 block w-full rounded border-gray-300 text-sm"
+						class="block rounded border border-gray-700 bg-blue-900 px-4 py-2 text-sm text-white hover:bg-gray-800"
 						type="file"
 						accept=".pdf,.txt,.md,.docx"
 						onchange={(event) => (file = event.currentTarget.files?.[0] ?? null)}
