@@ -91,7 +91,7 @@
 				<input
 					class="mt-1 block w-full rounded border-gray-300 text-sm"
 					type="text"
-					placeholder="ICC, matematicas, derecho..."
+					placeholder="Ciencias Computacionales, Energías Renovables, Matemáticas, Ética..."
 					bind:value={treeHint}
 				/>
 			</label>
@@ -101,7 +101,7 @@
 					classes="border-gray-700 bg-gray-900 text-white hover:bg-gray-800"
 					disabled={uploading}
 				>
-						{uploading ? 'Procesando...' : 'Subir y generar'}
+						{uploading ? 'Procesando...' : 'Subir'}
 				</Button>
 			</div>
 		</form>
